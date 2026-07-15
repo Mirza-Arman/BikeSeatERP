@@ -1,0 +1,105 @@
+<?php
+
+return [
+
+    'name' => env('APP_NAME', 'BikeSeat ERP'),
+
+    'footer' => 'Motorcycle Seat Manufacturing ERP',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Sidebar Navigation
+    |--------------------------------------------------------------------------
+    */
+    'menu' => [
+        [
+            'title' => 'Dashboard',
+            'icon' => 'fas fa-tachometer-alt',
+            'route' => 'dashboard',
+        ],
+        [
+            'title' => 'User Management',
+            'icon' => 'fas fa-users-cog',
+            'active' => 'user-management.*',
+            'children' => [
+                ['title' => 'Users', 'route' => 'user-management.users.index', 'icon' => 'fas fa-user'],
+                ['title' => 'Roles', 'route' => 'user-management.roles.index', 'icon' => 'fas fa-user-tag'],
+                ['title' => 'Permissions', 'route' => 'user-management.permissions.index', 'icon' => 'fas fa-key'],
+            ],
+        ],
+        [
+            'title' => 'Employees',
+            'icon' => 'fas fa-id-badge',
+            'active' => 'employees.*',
+            'children' => [
+                ['title' => 'Employees', 'route' => 'employees.index', 'icon' => 'fas fa-users'],
+                ['title' => 'Departments', 'route' => 'employees.departments.index', 'icon' => 'fas fa-building'],
+                ['title' => 'Attendance', 'route' => 'employees.attendance.index', 'icon' => 'fas fa-calendar-check'],
+            ],
+        ],
+        [
+            'title' => 'Supplier Management',
+            'icon' => 'fas fa-truck-loading',
+            'active' => 'suppliers.*',
+            'children' => [
+                ['title' => 'Suppliers', 'route' => 'suppliers.index', 'icon' => 'fas fa-industry'],
+                ['title' => 'Purchase Orders', 'route' => 'suppliers.purchase-orders.index', 'icon' => 'fas fa-file-invoice'],
+                ['title' => 'Purchase History', 'route' => 'suppliers.purchase-history.index', 'icon' => 'fas fa-history'],
+            ],
+        ],
+        [
+            'title' => 'Raw Material',
+            'icon' => 'fas fa-boxes',
+            'active' => 'raw-materials.*',
+            'children' => [
+                ['title' => 'Raw Materials', 'route' => 'raw-materials.index', 'icon' => 'fas fa-cubes'],
+                ['title' => 'Categories', 'route' => 'raw-materials.categories.index', 'icon' => 'fas fa-tags'],
+                ['title' => 'Stock Ledger', 'route' => 'raw-materials.stock-ledger.index', 'icon' => 'fas fa-book'],
+                ['title' => 'Stock Adjustments', 'route' => 'raw-materials.stock-adjustments.index', 'icon' => 'fas fa-sliders-h'],
+            ],
+        ],
+        [
+            'title' => 'Production',
+            'icon' => 'fas fa-industry',
+            'active' => 'production.*',
+            'children' => [
+                ['title' => 'Production Orders', 'route' => 'production.orders.index', 'icon' => 'fas fa-clipboard-list'],
+                ['title' => 'Workers', 'route' => 'production.workers.index', 'icon' => 'fas fa-hard-hat'],
+                ['title' => 'Daily Production', 'route' => 'production.daily.index', 'icon' => 'fas fa-calendar-day'],
+                ['title' => 'Production Formula', 'route' => 'production.formula.index', 'icon' => 'fas fa-flask'],
+                ['title' => 'Material Consumption', 'route' => 'production.material-consumption.index', 'icon' => 'fas fa-weight'],
+            ],
+        ],
+        [
+            'title' => 'Inventory',
+            'icon' => 'fas fa-warehouse',
+            'active' => 'inventory.*',
+            'children' => [
+                ['title' => 'Finished Goods', 'route' => 'inventory.finished-goods.index', 'icon' => 'fas fa-chair'],
+                ['title' => 'Stock', 'route' => 'inventory.stock.index', 'icon' => 'fas fa-box-open'],
+                ['title' => 'Stock Transactions', 'route' => 'inventory.transactions.index', 'icon' => 'fas fa-exchange-alt'],
+            ],
+        ],
+        [
+            'title' => 'Customers',
+            'icon' => 'fas fa-user-friends',
+            'active' => 'customers.*',
+            'children' => [
+                ['title' => 'Customers', 'route' => 'customers.index', 'icon' => 'fas fa-address-book'],
+                ['title' => 'Customer Orders', 'route' => 'customers.orders.index', 'icon' => 'fas fa-shopping-cart'],
+                ['title' => 'Delivery Records', 'route' => 'customers.delivery-records.index', 'icon' => 'fas fa-shipping-fast'],
+            ],
+        ],
+        [
+            'title' => 'Reports',
+            'icon' => 'fas fa-chart-bar',
+            'route' => 'reports.index',
+        ],
+        [
+            'title' => 'Settings',
+            'icon' => 'fas fa-cog',
+            'route' => 'settings.index',
+        ],
+    ],
+
+];
