@@ -5,17 +5,7 @@
 
 @section('content')
     <div class="row">
-        @foreach([
-            ['title' => 'Total Employees', 'value' => '128', 'icon' => 'fas fa-users', 'class' => 'bg-primary-gradient'],
-            ['title' => 'Total Suppliers', 'value' => '34', 'icon' => 'fas fa-truck-loading', 'class' => 'bg-success-gradient'],
-            ['title' => 'Total Customers', 'value' => '812', 'icon' => 'fas fa-user-friends', 'class' => 'bg-info-gradient'],
-            ['title' => 'Raw Materials', 'value' => '96', 'icon' => 'fas fa-cubes', 'class' => 'bg-warning-gradient'],
-            ['title' => 'Products', 'value' => '245', 'icon' => 'fas fa-chair', 'class' => 'bg-purple-gradient'],
-            ['title' => 'Production Today', 'value' => '186', 'icon' => 'fas fa-industry', 'class' => 'bg-teal-gradient'],
-            ['title' => 'Low Stock', 'value' => '12', 'icon' => 'fas fa-exclamation-triangle', 'class' => 'bg-danger-gradient'],
-            ['title' => 'Purchase Orders', 'value' => '21', 'icon' => 'fas fa-file-invoice', 'class' => 'bg-dark-gradient'],
-            ['title' => 'Customer Orders', 'value' => '59', 'icon' => 'fas fa-shopping-cart', 'class' => 'bg-primary-gradient'],
-        ] as $card)
+        @foreach($cards as $card)
             <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
                 <div class="small-box erp-stat-card {{ $card['class'] }}">
                     <div class="inner">
@@ -37,9 +27,38 @@
                     <h3 class="card-title"><i class="fas fa-chart-line mr-2"></i>Production Overview</h3>
                 </div>
                 <div class="card-body">
-                    <div class="erp-placeholder">
-                        <i class="fas fa-chart-bar"></i>
-                        <p>Chart widgets and analytics will be added here once the reporting layer is configured.</p>
+                    <div class="row mb-4">
+                        <div class="col-12 col-md-4">
+                            <div class="erp-summary-box">
+                                <div class="erp-summary-title">Today Production</div>
+                                <div class="erp-summary-value">{{ $overview['today'] }}</div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="erp-summary-box">
+                                <div class="erp-summary-title">Pending Orders</div>
+                                <div class="erp-summary-value">{{ $overview['pending'] }}</div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="erp-summary-box">
+                                <div class="erp-summary-title">Completed Orders</div>
+                                <div class="erp-summary-value">{{ $overview['completed'] }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            @php
+                                $productionTotal = max(1, $overview['pending'] + $overview['in_progress'] + $overview['completed']);
+                            @endphp
+                            <div class="progress mb-3" style="height: 18px;">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $overview['pending'] > 0 ? min(100, ($overview['pending'] / $productionTotal) * 100) : 0 }}%" aria-valuenow="{{ $overview['pending'] }}" aria-valuemin="0" aria-valuemax="100">Pending</div>
+                                <div class="progress-bar bg-info" role="progressbar" style="width: {{ $overview['in_progress'] > 0 ? min(100, ($overview['in_progress'] / $productionTotal) * 100) : 0 }}%" aria-valuenow="{{ $overview['in_progress'] }}" aria-valuemin="0" aria-valuemax="100">In Progress</div>
+                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ $overview['completed'] > 0 ? min(100, ($overview['completed'] / $productionTotal) * 100) : 0 }}%" aria-valuenow="{{ $overview['completed'] }}" aria-valuemin="0" aria-valuemax="100">Completed</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -50,22 +69,18 @@
                     <h3 class="card-title"><i class="fas fa-history mr-2"></i>Recent Activities</h3>
                 </div>
                 <div class="card-body">
-                    <div class="erp-activity-item">
-                        <h6 class="mb-1">Production order completed</h6>
-                        <small class="text-muted">10 minutes ago</small>
-                    </div>
-                    <div class="erp-activity-item">
-                        <h6 class="mb-1">New supplier approved</h6>
-                        <small class="text-muted">36 minutes ago</small>
-                    </div>
-                    <div class="erp-activity-item">
-                        <h6 class="mb-1">Low stock alert triggered</h6>
-                        <small class="text-muted">1 hour ago</small>
-                    </div>
-                    <div class="erp-activity-item">
-                        <h6 class="mb-1">Customer order updated</h6>
-                        <small class="text-muted">2 hours ago</small>
-                    </div>
+                    @forelse($activities as $activity)
+                        <div class="erp-activity-item">
+                            <h6 class="mb-1">{{ $activity['title'] }}</h6>
+                            <p class="mb-1 small text-muted">{{ $activity['description'] }}</p>
+                            <small class="text-muted">{{ $activity['time'] }}</small>
+                        </div>
+                    @empty
+                        <div class="erp-activity-item">
+                            <h6 class="mb-1">No recent activity available</h6>
+                            <small class="text-muted">Waiting for ERP events to appear.</small>
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </div>
