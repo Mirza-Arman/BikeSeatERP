@@ -33,7 +33,7 @@ class MaterialCategoryController extends Controller
     {
         MaterialCategory::create($request->validated());
 
-        return redirect()->route('erp.material-categories.index')->with('success', 'Category created successfully.');
+        return redirect()->route('erp.raw-materials.categories.index')->with('success', 'Category created successfully.');
     }
 
     public function edit(MaterialCategory $category): View
@@ -45,13 +45,13 @@ class MaterialCategoryController extends Controller
     {
         $category->update($request->validated());
 
-        return redirect()->route('erp.material-categories.index')->with('success', 'Category updated successfully.');
+        return redirect()->route('erp.raw-materials.categories.index')->with('success', 'Category updated successfully.');
     }
 
     public function destroy(MaterialCategory $category): RedirectResponse
     {
         $category->delete();
 
-        return redirect()->route('erp.material-categories.index')->with('success', 'Category deleted successfully.');
+        return redirect()->route('erp.raw-materials.categories.index')->with('success', 'Category deleted successfully.');
     }
 }

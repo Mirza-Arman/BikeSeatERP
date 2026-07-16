@@ -36,7 +36,6 @@ class ProductController extends Controller
     {
         $data = $request->validated();
         
-        // Auto-generate product code if not provided
         if (empty($data['product_code'])) {
             $lastProduct = Product::withTrashed()->orderBy('id', 'desc')->first();
             $lastId = $lastProduct ? $lastProduct->id : 0;
@@ -45,7 +44,7 @@ class ProductController extends Controller
         
         Product::create($data);
 
-        return redirect()->route('erp.products.index')->with('success', 'Product created successfully.');
+        return redirect()->route('erp.inventory.products.index')->with('success', 'Product created successfully.');
     }
 
     public function show(Product $product): View
@@ -66,14 +65,14 @@ class ProductController extends Controller
     {
         $product->update($request->validated());
 
-        return redirect()->route('erp.products.index')->with('success', 'Product updated successfully.');
+        return redirect()->route('erp.inventory.products.index')->with('success', 'Product updated successfully.');
     }
 
     public function destroy(Product $product): RedirectResponse
     {
         $product->delete();
 
-        return redirect()->route('erp.products.index')->with('success', 'Product deleted successfully.');
+        return redirect()->route('erp.inventory.products.index')->with('success', 'Product deleted successfully.');
     }
 
     public function toggleStatus(Product $product): RedirectResponse
@@ -82,6 +81,6 @@ class ProductController extends Controller
             'status' => $product->status === 'active' ? 'inactive' : 'active'
         ]);
 
-        return redirect()->route('erp.products.index')->with('success', 'Product status updated successfully.');
+        return redirect()->route('erp.inventory.products.index')->with('success', 'Product status updated successfully.');
     }
 }

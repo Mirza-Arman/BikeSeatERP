@@ -15,11 +15,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
+        // Create or update a default user
+        User::updateOrCreate([
             'email' => 'test@example.com',
+        ], [
+            'name' => 'Test User',
+            'password' => bcrypt('password'),
+        ]);
+
+        // Core demo data
+        $this->call([
+            SuppliersTableSeeder::class,
+            MaterialCategoriesSeeder::class,
+            RawMaterialsSeeder::class,
+            ProductsSeeder::class,
+            ProductionFormulasSeeder::class,
         ]);
     }
 }

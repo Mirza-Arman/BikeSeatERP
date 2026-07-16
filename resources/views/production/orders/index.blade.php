@@ -26,7 +26,7 @@
                         <tr>
                             <td>{{ $productionOrder->order_no }}</td>
                             <td>{{ $productionOrder->product?->product_name ?? '—' }}</td>
-                            <td>{{ $productionOrder->planned_quantity }}</td>
+                            <td>{{ number_format($productionOrder->quantity_to_produce, 2) }}</td>
                             <td>{{ $productionOrder->status }}</td>
                             <td>
                                 <a href="{{ route('erp.production.orders.show', $productionOrder) }}" class="btn btn-sm btn-info">View</a>

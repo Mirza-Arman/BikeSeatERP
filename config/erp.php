@@ -32,9 +32,9 @@ return [
             'icon' => 'fas fa-id-badge',
             'active' => 'employees.*',
             'children' => [
-                ['title' => 'Employees', 'route' => 'employees.index', 'icon' => 'fas fa-users'],
-                ['title' => 'Departments', 'route' => 'employees.departments.index', 'icon' => 'fas fa-building'],
-                ['title' => 'Attendance', 'route' => 'employees.attendance.index', 'icon' => 'fas fa-calendar-check'],
+                ['title' => 'Employees', 'route' => 'erp.employees.index', 'icon' => 'fas fa-users'],
+                ['title' => 'Departments', 'route' => 'erp.employees.departments.index', 'icon' => 'fas fa-building'],
+                ['title' => 'Attendance', 'route' => 'erp.employees.attendance.index', 'icon' => 'fas fa-calendar-check'],
             ],
         ],
         [
@@ -42,9 +42,9 @@ return [
             'icon' => 'fas fa-truck-loading',
             'active' => 'suppliers.*',
             'children' => [
-                ['title' => 'Suppliers', 'route' => 'suppliers.index', 'icon' => 'fas fa-industry'],
-                ['title' => 'Purchase Orders', 'route' => 'suppliers.purchase-orders.index', 'icon' => 'fas fa-file-invoice'],
-                ['title' => 'Purchase History', 'route' => 'suppliers.purchase-history.index', 'icon' => 'fas fa-history'],
+                ['title' => 'Suppliers', 'route' => 'erp.suppliers.index', 'icon' => 'fas fa-industry'],
+                ['title' => 'Purchase Orders', 'route' => 'erp.suppliers.purchase-orders.index', 'icon' => 'fas fa-file-invoice'],
+                ['title' => 'Purchase History', 'route' => 'erp.suppliers.purchase-history.index', 'icon' => 'fas fa-history'],
             ],
         ],
         [
@@ -52,10 +52,10 @@ return [
             'icon' => 'fas fa-boxes',
             'active' => 'raw-materials.*',
             'children' => [
-                ['title' => 'Raw Materials', 'route' => 'raw-materials.index', 'icon' => 'fas fa-cubes'],
-                ['title' => 'Categories', 'route' => 'raw-materials.categories.index', 'icon' => 'fas fa-tags'],
-                ['title' => 'Stock Ledger', 'route' => 'raw-materials.stock-ledger.index', 'icon' => 'fas fa-book'],
-                ['title' => 'Stock Adjustments', 'route' => 'raw-materials.stock-adjustments.index', 'icon' => 'fas fa-sliders-h'],
+                ['title' => 'Raw Materials', 'route' => 'erp.raw-materials.index', 'icon' => 'fas fa-cubes'],
+                ['title' => 'Categories', 'route' => 'erp.raw-materials.categories.index', 'icon' => 'fas fa-tags'],
+                ['title' => 'Stock Ledger', 'route' => 'erp.raw-materials.stock-ledger.index', 'icon' => 'fas fa-book'],
+                ['title' => 'Stock Adjustments', 'route' => 'erp.raw-materials.stock-adjustments.index', 'icon' => 'fas fa-sliders-h'],
             ],
         ],
         [
@@ -63,11 +63,11 @@ return [
             'icon' => 'fas fa-industry',
             'active' => 'production.*',
             'children' => [
-                ['title' => 'Production Orders', 'route' => 'production.orders.index', 'icon' => 'fas fa-clipboard-list'],
-                ['title' => 'Workers', 'route' => 'production.workers.index', 'icon' => 'fas fa-hard-hat'],
-                ['title' => 'Daily Production', 'route' => 'production.daily.index', 'icon' => 'fas fa-calendar-day'],
-                ['title' => 'Production Formula', 'route' => 'production.formula.index', 'icon' => 'fas fa-flask'],
-                ['title' => 'Material Consumption', 'route' => 'production.material-consumption.index', 'icon' => 'fas fa-weight'],
+                ['title' => 'Production Orders', 'route' => 'erp.production.orders.index', 'icon' => 'fas fa-clipboard-list'],
+                ['title' => 'Workers', 'route' => 'erp.production.workers.index', 'icon' => 'fas fa-hard-hat'],
+                ['title' => 'Daily Production', 'route' => 'erp.production.daily.index', 'icon' => 'fas fa-calendar-day'],
+                ['title' => 'Production Formula', 'route' => 'erp.production.formula.index', 'icon' => 'fas fa-flask'],
+                ['title' => 'Material Consumption', 'route' => 'erp.production.material-consumption.index', 'icon' => 'fas fa-weight'],
             ],
         ],
         [
@@ -75,9 +75,9 @@ return [
             'icon' => 'fas fa-warehouse',
             'active' => 'inventory.*',
             'children' => [
-                ['title' => 'Finished Goods', 'route' => 'inventory.finished-goods.index', 'icon' => 'fas fa-chair'],
-                ['title' => 'Stock', 'route' => 'inventory.stock.index', 'icon' => 'fas fa-box-open'],
-                ['title' => 'Stock Transactions', 'route' => 'inventory.transactions.index', 'icon' => 'fas fa-exchange-alt'],
+                ['title' => 'Finished Goods', 'route' => 'erp.inventory.finished-goods.index', 'icon' => 'fas fa-chair'],
+                ['title' => 'Stock', 'route' => 'erp.inventory.stock.index', 'icon' => 'fas fa-box-open'],
+                ['title' => 'Stock Transactions', 'route' => 'erp.inventory.transactions.index', 'icon' => 'fas fa-exchange-alt'],
             ],
         ],
         [
@@ -85,9 +85,9 @@ return [
             'icon' => 'fas fa-user-friends',
             'active' => 'customers.*',
             'children' => [
-                ['title' => 'Customers', 'route' => 'customers.index', 'icon' => 'fas fa-address-book'],
-                ['title' => 'Customer Orders', 'route' => 'customers.orders.index', 'icon' => 'fas fa-shopping-cart'],
-                ['title' => 'Delivery Records', 'route' => 'customers.delivery-records.index', 'icon' => 'fas fa-shipping-fast'],
+                ['title' => 'Customers', 'route' => 'erp.customers.index', 'icon' => 'fas fa-address-book'],
+                ['title' => 'Customer Orders', 'route' => 'erp.customers.orders.index', 'icon' => 'fas fa-shopping-cart'],
+                ['title' => 'Delivery Records', 'route' => 'erp.customers.delivery-records.index', 'icon' => 'fas fa-shipping-fast'],
             ],
         ],
         [

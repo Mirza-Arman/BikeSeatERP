@@ -41,9 +41,9 @@
                                 <tbody>
                                     @foreach ($customer->orders as $order)
                                         <tr>
-                                            <td>{{ $order->order_no }}</td>
+                                            <td>{{ $order->invoice_no }}</td>
                                             <td>{{ $order->order_date }}</td>
-                                            <td>{{ number_format($order->total_amount, 2) }}</td>
+                                            <td>{{ number_format($order->grand_total, 2) }}</td>
                                             <td><span class="badge badge-{{ $order->status === 'completed' ? 'success' : 'warning' }}">{{ $order->status }}</span></td>
                                         </tr>
                                     @endforeach

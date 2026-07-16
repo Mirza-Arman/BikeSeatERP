@@ -43,8 +43,8 @@
                                     @foreach ($supplier->purchaseOrders as $order)
                                         <tr>
                                             <td>{{ $order->invoice_no }}</td>
-                                            <td>{{ $order->order_date }}</td>
-                                            <td>{{ number_format($order->total_amount, 2) }}</td>
+                                            <td>{{ $order->purchase_date }}</td>
+                                            <td>{{ number_format($order->grand_total, 2) }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

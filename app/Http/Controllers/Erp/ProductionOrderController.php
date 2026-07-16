@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Erp;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Production\ProductionOrderRequest;
 use App\Models\ProductionOrder;
 use App\Models\Product;
-use App\Models\RawMaterial;
 use App\Services\Inventory\StockService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -38,16 +38,11 @@ class ProductionOrderController extends Controller
         return view('production.orders.create', compact('products'));
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(ProductionOrderRequest $request): RedirectResponse
     {
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'quantity_to_produce' => 'required|numeric|min:0.01',
-            'production_date' => 'required|date',
-            'remarks' => 'nullable|string',
-        ]);
+        $data = $request->validated();
 
-        $product = Product::findOrFail($request->product_id);
+        $product = Product::findOrFail($data['product_id']);
         $formula = $product->productionFormula;
 
         if (!$formula) {
@@ -57,7 +52,7 @@ class ProductionOrderController extends Controller
         // Check stock availability
         $stockIssues = [];
         foreach ($formula->items as $item) {
-            $requiredQuantity = $item->quantity_required * $request->quantity_to_produce;
+            $requiredQuantity = $item->quantity_required * $data['quantity_to_produce'];
             $availableStock = $item->rawMaterial->current_stock;
             
             if ($availableStock < $requiredQuantity) {
@@ -81,12 +76,12 @@ class ProductionOrderController extends Controller
 
         $productionOrder = ProductionOrder::create([
             'order_no' => $orderNo,
-            'product_id' => $request->product_id,
+            'product_id' => $data['product_id'],
             'formula_id' => $formula->id,
-            'quantity_to_produce' => $request->quantity_to_produce,
-            'production_date' => $request->production_date,
+            'quantity_to_produce' => $data['quantity_to_produce'],
+            'production_date' => $data['production_date'],
             'status' => 'pending',
-            'remarks' => $request->remarks,
+            'remarks' => $data['remarks'] ?? null,
         ]);
 
         return redirect()->route('erp.production.orders.show', $productionOrder)->with('success', 'Production order created successfully.');
@@ -102,17 +97,17 @@ class ProductionOrderController extends Controller
     public function updateStatus(Request $request, ProductionOrder $productionOrder): RedirectResponse
     {
         $request->validate(['status' => 'required|in:pending,in_progress,completed']);
-        
-        $productionOrder->update(['status' => $request->status]);
 
-        if ($productionOrder->status === 'completed' && $productionOrder->formula_id) {
-            DB::transaction(function () use ($productionOrder) {
+        DB::transaction(function () use ($productionOrder, $request): void {
+            $productionOrder->refresh();
+            $productionOrder->update(['status' => $request->status]);
+
+            if ($productionOrder->status === 'completed' && $productionOrder->formula_id) {
                 $formula = $productionOrder->formula;
-                
-                // Subtract raw materials
+
                 foreach ($formula->items as $item) {
                     $requiredQuantity = $item->quantity_required * $productionOrder->quantity_to_produce;
-                    
+
                     $this->stockService->removeRawMaterialStock(
                         $item->raw_material_id,
                         $requiredQuantity,
@@ -122,7 +117,6 @@ class ProductionOrderController extends Controller
                     );
                 }
 
-                // Add finished goods
                 $this->stockService->addFinishedGoodsStock(
                     $productionOrder->product_id,
                     (float) $productionOrder->quantity_to_produce,
@@ -130,8 +124,8 @@ class ProductionOrderController extends Controller
                     $productionOrder->id,
                     'Finished goods produced'
                 );
-            });
-        }
+            }
+        });
 
         return redirect()->route('erp.production.orders.show', $productionOrder)->with('success', 'Production order status updated successfully.');
     }

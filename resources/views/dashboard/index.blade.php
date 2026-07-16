@@ -87,9 +87,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>Production</td><td><span class="badge badge-success">Ready</span></td><td><a href="{{ route('production.orders.index') }}" class="btn btn-sm btn-outline-primary">Open</a></td></tr>
-                            <tr><td>Inventory</td><td><span class="badge badge-success">Ready</span></td><td><a href="{{ route('inventory.stock.index') }}" class="btn btn-sm btn-outline-primary">Open</a></td></tr>
-                            <tr><td>Suppliers</td><td><span class="badge badge-success">Ready</span></td><td><a href="{{ route('suppliers.index') }}" class="btn btn-sm btn-outline-primary">Open</a></td></tr>
+                            <tr><td>Production</td><td><span class="badge badge-success">Ready</span></td><td><a href="{{ route('erp.production.orders.index') }}" class="btn btn-sm btn-outline-primary">Open</a></td></tr>
+                            <tr><td>Inventory</td><td><span class="badge badge-success">Ready</span></td><td><a href="{{ route('erp.inventory.stock.index') }}" class="btn btn-sm btn-outline-primary">Open</a></td></tr>
+                            <tr><td>Suppliers</td><td><span class="badge badge-success">Ready</span></td><td><a href="{{ route('erp.suppliers.index') }}" class="btn btn-sm btn-outline-primary">Open</a></td></tr>
                         </tbody>
                     </table>
                 </div>
