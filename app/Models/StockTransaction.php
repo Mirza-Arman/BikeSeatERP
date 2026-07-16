@@ -11,14 +11,18 @@ class StockTransaction extends Model
         'raw_material_id',
         'transaction_type',
         'quantity',
+        'previous_quantity',
         'balance_after',
         'reference_type',
         'reference_id',
         'remarks',
+        'supplier_name',
+        'user_id',
     ];
 
     protected $casts = [
         'quantity' => 'decimal:2',
+        'previous_quantity' => 'decimal:2',
         'balance_after' => 'decimal:2',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
@@ -27,5 +31,10 @@ class StockTransaction extends Model
     public function rawMaterial(): BelongsTo
     {
         return $this->belongsTo(RawMaterial::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

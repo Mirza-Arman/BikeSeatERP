@@ -43,8 +43,17 @@ return [
             'active' => 'suppliers.*',
             'children' => [
                 ['title' => 'Suppliers', 'route' => 'erp.suppliers.index', 'icon' => 'fas fa-industry'],
-                ['title' => 'Purchase Orders', 'route' => 'erp.suppliers.purchase-orders.index', 'icon' => 'fas fa-file-invoice'],
                 ['title' => 'Purchase History', 'route' => 'erp.suppliers.purchase-history.index', 'icon' => 'fas fa-history'],
+            ],
+        ],
+        [
+            'title' => 'Purchase Management',
+            'icon' => 'fas fa-shopping-cart',
+            'active' => 'purchases.*',
+            'children' => [
+                ['title' => 'Purchase Orders', 'route' => 'purchases.purchase-orders.index', 'icon' => 'fas fa-file-invoice'],
+                ['title' => 'Payments', 'route' => 'purchases.payments.index', 'icon' => 'fas fa-money-bill'],
+                ['title' => 'Supplier Ledger', 'route' => 'purchases.supplier-ledger.index', 'icon' => 'fas fa-book'],
             ],
         ],
         [

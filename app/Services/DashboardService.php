@@ -20,6 +20,12 @@ class DashboardService
         $todayProduction = ProductionOrder::whereDate('production_date', Carbon::today())->count();
         $lowStockCount = RawMaterial::whereColumn('current_stock', '<=', 'minimum_stock')->count()
             + Product::whereColumn('current_stock', '<=', 'minimum_stock')->count();
+        $todayPurchases = PurchaseOrder::whereDate('purchase_date', Carbon::today())->sum('grand_total');
+        $pendingPurchaseOrders = PurchaseOrder::where('status', 'pending')->count();
+        $supplierOutstanding = PurchaseOrder::where('remaining_amount', '>', 0)->sum('remaining_amount');
+        $overduePurchaseOrders = PurchaseOrder::where('status', '!=', 'completed')
+            ->where('expected_delivery', '<', Carbon::today())
+            ->count();
 
         return [
             [
@@ -65,16 +71,34 @@ class DashboardService
                 'class' => 'bg-danger-gradient',
             ],
             [
-                'title' => 'Purchase Orders',
-                'value' => (string) PurchaseOrder::count(),
-                'icon' => 'fas fa-file-invoice',
-                'class' => 'bg-dark-gradient',
+                'title' => 'Today\'s Purchases',
+                'value' => number_format($todayPurchases, 2),
+                'icon' => 'fas fa-shopping-bag',
+                'class' => 'bg-primary-gradient',
+            ],
+            [
+                'title' => 'Pending POs',
+                'value' => (string) $pendingPurchaseOrders,
+                'icon' => 'fas fa-clock',
+                'class' => 'bg-warning-gradient',
+            ],
+            [
+                'title' => 'Supplier Outstanding',
+                'value' => number_format($supplierOutstanding, 2),
+                'icon' => 'fas fa-money-bill-wave',
+                'class' => 'bg-danger-gradient',
+            ],
+            [
+                'title' => 'Overdue POs',
+                'value' => (string) $overduePurchaseOrders,
+                'icon' => 'fas fa-exclamation-circle',
+                'class' => 'bg-secondary-gradient',
             ],
             [
                 'title' => 'Customer Orders',
                 'value' => (string) CustomerOrder::count(),
                 'icon' => 'fas fa-shopping-cart',
-                'class' => 'bg-primary-gradient',
+                'class' => 'bg-info-gradient',
             ],
         ];
     }
@@ -182,5 +206,35 @@ class DashboardService
                     'date' => $material->updated_at,
                 ];
             });
+    }
+
+    public function getNotifications(): array
+    {
+        $lowStockMaterials = RawMaterial::where('current_stock', '<=', 'minimum_stock')
+            ->latest()
+            ->limit(5)
+            ->get()
+            ->map(function (RawMaterial $material) {
+                return [
+                    'type' => 'warning',
+                    'message' => "Low stock: {$material->name} ({$material->current_stock} {$material->unit})",
+                    'url' => route('erp.raw-materials.show', $material),
+                ];
+            });
+
+        $overduePurchaseOrders = PurchaseOrder::where('status', '!=', 'completed')
+            ->where('expected_delivery', '<', Carbon::today())
+            ->latest()
+            ->limit(5)
+            ->get()
+            ->map(function (PurchaseOrder $order) {
+                return [
+                    'type' => 'danger',
+                    'message' => "Overdue PO: {$order->purchase_number} from {$order->supplier->company_name}",
+                    'url' => route('purchases.purchase-orders.show', $order),
+                ];
+            });
+
+        return $lowStockMaterials->concat($overduePurchaseOrders)->toArray();
     }
 }

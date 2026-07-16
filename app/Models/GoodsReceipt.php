@@ -4,26 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PurchaseOrderItem extends Model
+class GoodsReceipt extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'purchase_order_id',
-        'raw_material_id',
-        'quantity',
-        'unit',
-        'unit_price',
-        'total',
-        'received_quantity',
+        'receipt_number',
+        'received_date',
+        'remarks',
+        'created_by',
     ];
 
     protected $casts = [
-        'quantity' => 'decimal:2',
-        'unit_price' => 'decimal:2',
-        'total' => 'decimal:2',
-        'received_quantity' => 'decimal:2',
+        'received_date' => 'date',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     public function purchaseOrder(): BelongsTo
@@ -31,8 +30,8 @@ class PurchaseOrderItem extends Model
         return $this->belongsTo(PurchaseOrder::class);
     }
 
-    public function rawMaterial(): BelongsTo
+    public function createdBy(): BelongsTo
     {
-        return $this->belongsTo(RawMaterial::class);
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

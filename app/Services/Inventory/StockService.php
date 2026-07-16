@@ -2,17 +2,20 @@
 
 namespace App\Services\Inventory;
 
+use App\Models\FinishedGoodsTransaction;
+use App\Models\Product;
 use App\Models\RawMaterial;
 use App\Models\StockTransaction;
 use Illuminate\Support\Facades\DB;
 
 class StockService
 {
-    public function addRawMaterialStock(int $rawMaterialId, float $quantity, string $referenceType, int $referenceId, string $remarks = ''): void
+    public function addRawMaterialStock(int $rawMaterialId, float $quantity, string $referenceType, int $referenceId, string $remarks = '', ?string $supplierName = null, ?int $userId = null): void
     {
-        DB::transaction(function () use ($rawMaterialId, $quantity, $referenceType, $referenceId, $remarks): void {
+        DB::transaction(function () use ($rawMaterialId, $quantity, $referenceType, $referenceId, $remarks, $supplierName, $userId): void {
             $rawMaterial = RawMaterial::lockForUpdate()->findOrFail($rawMaterialId);
-            $newBalance = (float) $rawMaterial->current_stock + $quantity;
+            $previousQuantity = (float) $rawMaterial->current_stock;
+            $newBalance = $previousQuantity + $quantity;
 
             $rawMaterial->current_stock = $newBalance;
             $rawMaterial->save();
@@ -21,10 +24,13 @@ class StockService
                 'raw_material_id' => $rawMaterialId,
                 'transaction_type' => 'purchase',
                 'quantity' => $quantity,
+                'previous_quantity' => $previousQuantity,
                 'balance_after' => $newBalance,
                 'reference_type' => $referenceType,
                 'reference_id' => $referenceId,
                 'remarks' => $remarks,
+                'supplier_name' => $supplierName,
+                'user_id' => $userId,
             ]);
         });
     }
@@ -56,14 +62,14 @@ class StockService
 
     public function addFinishedGoodsStock(int $productId, float $quantity, string $referenceType, int $referenceId, string $remarks = ''): void
     {
-        DB::transaction(function () use ($productId, $quantity, $referenceType, $referenceId, $remarks): void {
-            $product = \App\Models\Product::lockForUpdate()->findOrFail($productId);
+        DB::transaction(function () use ($productId, $quantity, $referenceType, $referenceId): void {
+            $product = Product::lockForUpdate()->findOrFail($productId);
             $newBalance = (float) $product->current_stock + $quantity;
 
             $product->current_stock = $newBalance;
             $product->save();
 
-            \App\Models\FinishedGoodsTransaction::create([
+            FinishedGoodsTransaction::create([
                 'product_id' => $productId,
                 'transaction_type' => 'production',
                 'quantity' => $quantity,
@@ -76,8 +82,8 @@ class StockService
 
     public function removeFinishedGoodsStock(int $productId, float $quantity, string $referenceType, int $referenceId, string $remarks = ''): void
     {
-        DB::transaction(function () use ($productId, $quantity, $referenceType, $referenceId, $remarks): void {
-            $product = \App\Models\Product::lockForUpdate()->findOrFail($productId);
+        DB::transaction(function () use ($productId, $quantity, $referenceType, $referenceId): void {
+            $product = Product::lockForUpdate()->findOrFail($productId);
 
             if ((float) $product->current_stock < $quantity) {
                 throw new \RuntimeException('Insufficient finished goods stock.');
@@ -87,7 +93,7 @@ class StockService
             $product->current_stock = $newBalance;
             $product->save();
 
-            \App\Models\FinishedGoodsTransaction::create([
+            FinishedGoodsTransaction::create([
                 'product_id' => $productId,
                 'transaction_type' => 'sale',
                 'quantity' => -$quantity,

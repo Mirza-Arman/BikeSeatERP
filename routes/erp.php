@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\Customers\CustomerController as LegacyCustomerController;
-use App\Http\Controllers\Customers\CustomerOrderController as LegacyCustomerOrderController;
 use App\Http\Controllers\Customers\DeliveryRecordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Employees\AttendanceController;
@@ -21,16 +19,16 @@ use App\Http\Controllers\Inventory\StockTransactionController;
 use App\Http\Controllers\Production\DailyProductionController;
 use App\Http\Controllers\Production\MaterialConsumptionController;
 use App\Http\Controllers\Production\ProductionFormulaController;
-use App\Http\Controllers\Production\ProductionOrderController as LegacyProductionOrderController;
 use App\Http\Controllers\Production\WorkerController;
-use App\Http\Controllers\RawMaterials\CategoryController;
+use App\Http\Controllers\Purchases\GoodsReceiptController;
+use App\Http\Controllers\Purchases\PaymentController;
+use App\Http\Controllers\Purchases\PurchaseOrderController as NewPurchaseOrderController;
+use App\Http\Controllers\Purchases\SupplierLedgerController;
 use App\Http\Controllers\RawMaterials\StockAdjustmentController;
 use App\Http\Controllers\RawMaterials\StockLedgerController;
 use App\Http\Controllers\Reports\ReportController;
 use App\Http\Controllers\Settings\SettingsController;
 use App\Http\Controllers\Suppliers\PurchaseHistoryController;
-use App\Http\Controllers\Suppliers\PurchaseOrderController as LegacyPurchaseOrderController;
-use App\Http\Controllers\Suppliers\SupplierController as LegacySupplierController;
 use App\Http\Controllers\UserManagement\PermissionController;
 use App\Http\Controllers\UserManagement\RoleController;
 use App\Http\Controllers\UserManagement\UserController;
@@ -146,6 +144,35 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/orders/{customerOrder}/status', [CustomerOrderController::class, 'updateStatus'])->name('orders.status');
         Route::delete('/orders/{customerOrder}', [CustomerOrderController::class, 'destroy'])->name('orders.destroy');
         Route::get('/delivery-records', [DeliveryRecordController::class, 'index'])->name('delivery-records.index');
+    });
+
+    Route::prefix('purchases')->name('purchases.')->group(function () {
+        Route::prefix('purchase-orders')->name('purchase-orders.')->group(function () {
+            Route::get('/', [NewPurchaseOrderController::class, 'index'])->name('index');
+            Route::get('/create', [NewPurchaseOrderController::class, 'create'])->name('create');
+            Route::post('/', [NewPurchaseOrderController::class, 'store'])->name('store');
+            Route::get('/{purchaseOrder}', [NewPurchaseOrderController::class, 'show'])->name('show');
+            Route::get('/{purchaseOrder}/edit', [NewPurchaseOrderController::class, 'edit'])->name('edit');
+            Route::put('/{purchaseOrder}', [NewPurchaseOrderController::class, 'update'])->name('update');
+            Route::delete('/{purchaseOrder}', [NewPurchaseOrderController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('goods-receipts')->name('goods-receipts.')->group(function () {
+            Route::get('/{purchaseOrder}/create', [GoodsReceiptController::class, 'create'])->name('create');
+            Route::post('/{purchaseOrder}', [GoodsReceiptController::class, 'store'])->name('store');
+        });
+
+        Route::prefix('payments')->name('payments.')->group(function () {
+            Route::get('/', [PaymentController::class, 'index'])->name('index');
+            Route::get('/{purchaseOrder}/create', [PaymentController::class, 'create'])->name('create');
+            Route::post('/', [PaymentController::class, 'store'])->name('store');
+            Route::delete('/{payment}', [PaymentController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('supplier-ledger')->name('supplier-ledger.')->group(function () {
+            Route::get('/', [SupplierLedgerController::class, 'index'])->name('index');
+            Route::get('/{supplier}', [SupplierLedgerController::class, 'show'])->name('show');
+        });
     });
 
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
