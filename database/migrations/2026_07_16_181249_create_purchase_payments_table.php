@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date('payment_date');
             $table->text('remarks')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->index(['purchase_order_id', 'payment_date']);

@@ -6,7 +6,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <form method="POST" action="{{ route('erp.suppliers.purchase-orders.store') }}">
+            <form method="POST" action="{{ route('purchases.purchase-orders.store') }}">
                 @csrf
                 <div class="row">
                     <div class="col-md-6 form-group">
@@ -34,7 +34,7 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <hr>
                 <h5>Order Items</h5>
                 <div id="items-container">
@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <button type="button" class="btn btn-secondary btn-sm mb-3" id="add-item">Add Item</button>
-                
+
                 <hr>
                 <div class="row">
                     <div class="col-md-4 form-group">
@@ -83,16 +83,16 @@
                         <input type="text" id="grand-total" class="form-control" readonly>
                     </div>
                 </div>
-                
+
                 <button type="submit" class="btn btn-primary">Save</button>
-                <a href="{{ route('erp.suppliers.purchase-orders.index') }}" class="btn btn-secondary">Cancel</a>
+                <a href="{{ route('purchases.purchase-orders.index') }}" class="btn btn-secondary">Cancel</a>
             </form>
         </div>
     </div>
-    
+
     <script>
         let itemCount = 1;
-        
+
         document.getElementById('add-item').addEventListener('click', function() {
             const container = document.getElementById('items-container');
             const newRow = document.createElement('div');
@@ -127,20 +127,20 @@
             container.appendChild(newRow);
             itemCount++;
         });
-        
+
         document.addEventListener('click', function(e) {
             if (e.target.classList.contains('remove-item')) {
                 e.target.closest('.item-row').remove();
                 calculateTotals();
             }
         });
-        
+
         document.addEventListener('input', function(e) {
             if (e.target.name && (e.target.name.includes('quantity') || e.target.name.includes('unit_price'))) {
                 calculateTotals();
             }
         });
-        
+
         function calculateTotals() {
             let subtotal = 0;
             document.querySelectorAll('.item-row').forEach(row => {
@@ -150,7 +150,7 @@
                 row.querySelector('.item-total').value = total.toFixed(2);
                 subtotal += total;
             });
-            
+
             const tax = parseFloat(document.querySelector('input[name="tax"]').value) || 0;
             const grandTotal = subtotal + tax;
             document.getElementById('grand-total').value = grandTotal.toFixed(2);

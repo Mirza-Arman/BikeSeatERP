@@ -7,7 +7,7 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h3 class="card-title">Purchase orders</h3>
-            <a href="{{ route('erp.suppliers.purchase-orders.create') }}" class="btn btn-primary btn-sm">New purchase order</a>
+            <a href="{{ route('purchases.purchase-orders.create') }}" class="btn btn-primary btn-sm">New purchase order</a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -35,9 +35,9 @@
                             <td>{{ number_format($purchaseOrder->remaining_amount, 2) }}</td>
                             <td><span class="badge badge-{{ $purchaseOrder->status === 'received' ? 'success' : 'warning' }}">{{ $purchaseOrder->status }}</span></td>
                             <td>
-                                <a href="{{ route('erp.suppliers.purchase-orders.show', $purchaseOrder) }}" class="btn btn-sm btn-info">View</a>
-                                <a href="{{ route('erp.suppliers.purchase-orders.edit', $purchaseOrder) }}" class="btn btn-sm btn-warning">Edit</a>
-                                <form action="{{ route('erp.suppliers.purchase-orders.destroy', $purchaseOrder) }}" method="POST" class="d-inline">
+                                <a href="{{ route('purchases.purchase-orders.show', $purchaseOrder) }}" class="btn btn-sm btn-info">View</a>
+                                <a href="{{ route('purchases.purchase-orders.edit', $purchaseOrder) }}" class="btn btn-sm btn-warning">Edit</a>
+                                <form action="{{ route('purchases.purchase-orders.destroy', $purchaseOrder) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-sm btn-danger" type="submit">Delete</button>
