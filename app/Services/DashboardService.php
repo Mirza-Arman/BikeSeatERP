@@ -5,9 +5,11 @@ namespace App\Services;
 use App\Models\Customer;
 use App\Models\CustomerOrder;
 use App\Models\Employee;
+use App\Models\MaterialCategory;
 use App\Models\Product;
 use App\Models\ProductionOrder;
 use App\Models\PurchaseOrder;
+use App\Models\PurchaseOrderItem;
 use App\Models\RawMaterial;
 use App\Models\Supplier;
 use Illuminate\Support\Carbon;
@@ -22,7 +24,7 @@ class DashboardService
             + Product::whereColumn('current_stock', '<=', 'minimum_stock')->count();
         $todayPurchases = PurchaseOrder::whereDate('purchase_date', Carbon::today())->sum('grand_total');
         $pendingPurchaseOrders = PurchaseOrder::where('status', 'pending')->count();
-        $supplierOutstanding = PurchaseOrder::where('remaining_amount', '>', 0)->sum('remaining_amount');
+        $supplierOutstanding = Supplier::where('balance', '>', 0)->sum('balance');
         $overduePurchaseOrders = PurchaseOrder::where('status', '!=', 'completed')
             ->where('expected_delivery', '<', Carbon::today())
             ->count();
@@ -47,6 +49,12 @@ class DashboardService
                 'class' => 'bg-info-gradient',
             ],
             [
+                'title' => 'Material Categories',
+                'value' => (string) MaterialCategory::count(),
+                'icon' => 'fas fa-layer-group',
+                'class' => 'bg-purple-gradient',
+            ],
+            [
                 'title' => 'Raw Materials',
                 'value' => (string) RawMaterial::count(),
                 'icon' => 'fas fa-cubes',
@@ -56,13 +64,13 @@ class DashboardService
                 'title' => 'Products',
                 'value' => (string) Product::count(),
                 'icon' => 'fas fa-chair',
-                'class' => 'bg-purple-gradient',
+                'class' => 'bg-teal-gradient',
             ],
             [
                 'title' => 'Production Today',
                 'value' => (string) $todayProduction,
                 'icon' => 'fas fa-industry',
-                'class' => 'bg-teal-gradient',
+                'class' => 'bg-primary-gradient',
             ],
             [
                 'title' => 'Low Stock',
@@ -74,7 +82,7 @@ class DashboardService
                 'title' => 'Today\'s Purchases',
                 'value' => number_format($todayPurchases, 2),
                 'icon' => 'fas fa-shopping-bag',
-                'class' => 'bg-primary-gradient',
+                'class' => 'bg-success-gradient',
             ],
             [
                 'title' => 'Pending POs',

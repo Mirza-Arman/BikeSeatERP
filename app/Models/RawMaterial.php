@@ -13,20 +13,27 @@ class RawMaterial extends Model
 
     protected $fillable = [
         'category_id',
+        'supplier_id',
         'material_code',
         'name',
+        'attributes',
         'unit',
         'minimum_stock',
         'current_stock',
         'cost_per_unit',
+        'purchase_price',
+        'average_cost',
         'description',
         'status',
     ];
 
     protected $casts = [
+        'attributes' => 'array',
         'minimum_stock' => 'decimal:2',
         'current_stock' => 'decimal:2',
         'cost_per_unit' => 'decimal:2',
+        'purchase_price' => 'decimal:2',
+        'average_cost' => 'decimal:2',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
@@ -35,6 +42,11 @@ class RawMaterial extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(MaterialCategory::class, 'category_id');
+    }
+
+    public function supplier(): BelongsTo
+    {
+        return $this->belongsTo(Supplier::class);
     }
 
     public function stockTransactions(): HasMany

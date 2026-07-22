@@ -27,4 +27,9 @@ class MaterialCategory extends Model
     {
         return $this->hasMany(RawMaterial::class, 'category_id');
     }
+
+    public function attributes(): HasMany
+    {
+        return $this->hasMany(MaterialCategoryAttribute::class, 'category_id')->orderBy('sort_order');
+    }
 }

@@ -47,13 +47,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [ErpEmployeeController::class, 'index'])->name('index');
         Route::get('/create', [ErpEmployeeController::class, 'create'])->name('create');
         Route::post('/', [ErpEmployeeController::class, 'store'])->name('store');
+        Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
+        Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
         Route::get('/{employee}', [ErpEmployeeController::class, 'show'])->name('show');
         Route::get('/{employee}/edit', [ErpEmployeeController::class, 'edit'])->name('edit');
         Route::put('/{employee}', [ErpEmployeeController::class, 'update'])->name('update');
         Route::delete('/{employee}', [ErpEmployeeController::class, 'destroy'])->name('destroy');
         Route::post('/{employee}/toggle-status', [ErpEmployeeController::class, 'toggleStatus'])->name('toggle-status');
-        Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
-        Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
     });
 
     Route::prefix('suppliers')->name('erp.suppliers.')->group(function () {
@@ -65,6 +65,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/{supplier}', [SupplierController::class, 'update'])->name('update');
         Route::delete('/{supplier}', [SupplierController::class, 'destroy'])->name('destroy');
         Route::post('/{supplier}/toggle-status', [SupplierController::class, 'toggleStatus'])->name('toggle-status');
+        Route::get('/{supplier}/ledger', [SupplierController::class, 'ledger'])->name('ledger');
+        Route::get('/{supplier}/materials-supplied', [SupplierController::class, 'materialsSupplied'])->name('materials-supplied');
+        Route::get('/{supplier}/create-payment', [SupplierController::class, 'createPayment'])->name('create-payment');
+        Route::post('/payments', [SupplierController::class, 'storePayment'])->name('store-payment');
         Route::get('/purchase-history', [PurchaseHistoryController::class, 'index'])->name('purchase-history.index');
     });
 
@@ -72,11 +76,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [RawMaterialController::class, 'index'])->name('index');
         Route::get('/create', [RawMaterialController::class, 'create'])->name('create');
         Route::post('/', [RawMaterialController::class, 'store'])->name('store');
-        Route::get('/{rawMaterial}', [RawMaterialController::class, 'show'])->name('show');
-        Route::get('/{rawMaterial}/edit', [RawMaterialController::class, 'edit'])->name('edit');
-        Route::put('/{rawMaterial}', [RawMaterialController::class, 'update'])->name('update');
-        Route::delete('/{rawMaterial}', [RawMaterialController::class, 'destroy'])->name('destroy');
-        Route::post('/{rawMaterial}/toggle-status', [RawMaterialController::class, 'toggleStatus'])->name('toggle-status');
         Route::get('/categories', [MaterialCategoryController::class, 'index'])->name('categories.index');
         Route::get('/categories/create', [MaterialCategoryController::class, 'create'])->name('categories.create');
         Route::post('/categories', [MaterialCategoryController::class, 'store'])->name('categories.store');
@@ -85,6 +84,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/categories/{category}', [MaterialCategoryController::class, 'destroy'])->name('categories.destroy');
         Route::get('/stock-ledger', [StockLedgerController::class, 'index'])->name('stock-ledger.index');
         Route::get('/stock-adjustments', [StockAdjustmentController::class, 'index'])->name('stock-adjustments.index');
+        Route::get('/{rawMaterial}', [RawMaterialController::class, 'show'])->name('show');
+        Route::get('/{rawMaterial}/edit', [RawMaterialController::class, 'edit'])->name('edit');
+        Route::put('/{rawMaterial}', [RawMaterialController::class, 'update'])->name('update');
+        Route::delete('/{rawMaterial}', [RawMaterialController::class, 'destroy'])->name('destroy');
+        Route::post('/{rawMaterial}/toggle-status', [RawMaterialController::class, 'toggleStatus'])->name('toggle-status');
     });
 
     Route::prefix('production')->name('erp.production.')->group(function () {

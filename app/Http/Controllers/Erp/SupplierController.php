@@ -3,29 +3,44 @@
 namespace App\Http\Controllers\Erp;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Suppliers\SupplierRequest;
+use App\Http\Requests\SupplierPaymentRequest;
+use App\Http\Requests\SupplierRequest;
 use App\Models\Supplier;
+use App\Services\SupplierService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class SupplierController extends Controller
 {
+    private SupplierService $supplierService;
+
+    public function __construct(SupplierService $supplierService)
+    {
+        $this->supplierService = $supplierService;
+    }
+
     public function index(Request $request): View
     {
-        $query = Supplier::query();
+        $query = Supplier::with('rawMaterials');
 
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request): void {
                 $q->where('supplier_code', 'like', '%' . $request->search . '%')
-                    ->orWhere('name', 'like', '%' . $request->search . '%')
-                    ->orWhere('email', 'like', '%' . $request->search . '%');
+                    ->orWhere('company_name', 'like', '%' . $request->search . '%')
+                    ->orWhere('contact_person', 'like', '%' . $request->search . '%')
+                    ->orWhere('phone', 'like', '%' . $request->search . '%');
             });
         }
 
-        $suppliers = $query->latest()->paginate(15);
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
 
-        return view('suppliers.index', compact('suppliers'));
+        $suppliers = $query->latest()->paginate(15);
+        $statistics = $this->supplierService->getSupplierStatistics();
+
+        return view('suppliers.index', compact('suppliers', 'statistics'));
     }
 
     public function create(): View
@@ -36,14 +51,9 @@ class SupplierController extends Controller
     public function store(SupplierRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        
-        // Auto-generate supplier code if not provided
-        if (empty($data['supplier_code'])) {
-            $lastSupplier = Supplier::withTrashed()->orderBy('id', 'desc')->first();
-            $lastId = $lastSupplier ? $lastSupplier->id : 0;
-            $data['supplier_code'] = 'SUP' . str_pad($lastId + 1, 5, '0', STR_PAD_LEFT);
-        }
-        
+        $data['supplier_code'] = $this->supplierService->generateSupplierCode();
+        $data['balance'] = 0;
+
         Supplier::create($data);
 
         return redirect()->route('erp.suppliers.index')->with('success', 'Supplier created successfully.');
@@ -51,11 +61,9 @@ class SupplierController extends Controller
 
     public function show(Supplier $supplier): View
     {
-        $supplier->load(['purchaseOrders' => function ($query) {
-            $query->latest()->limit(10);
-        }]);
-        
-        return view('suppliers.show', compact('supplier'));
+        $dashboard = $this->supplierService->getSupplierDashboard($supplier);
+
+        return view('suppliers.show', compact('supplier', 'dashboard'));
     }
 
     public function edit(Supplier $supplier): View
@@ -84,5 +92,35 @@ class SupplierController extends Controller
         ]);
 
         return redirect()->route('erp.suppliers.index')->with('success', 'Supplier status updated successfully.');
+    }
+
+    public function ledger(Supplier $supplier): View
+    {
+        $ledger = $this->supplierService->getSupplierLedger($supplier);
+
+        return view('suppliers.ledger', compact('supplier', 'ledger'));
+    }
+
+    public function materialsSupplied(Supplier $supplier): View
+    {
+        $materials = $this->supplierService->getMaterialsSupplied($supplier);
+
+        return view('suppliers.materials-supplied', compact('supplier', 'materials'));
+    }
+
+    public function createPayment(Supplier $supplier): View
+    {
+        return view('suppliers.create-payment', compact('supplier'));
+    }
+
+    public function storePayment(SupplierPaymentRequest $request): RedirectResponse
+    {
+        $this->supplierService->recordSupplierPayment(
+            $request->validated(),
+            auth()->id()
+        );
+
+        return redirect()->route('erp.suppliers.show', $request->supplier_id)
+            ->with('success', 'Payment recorded successfully.');
     }
 }

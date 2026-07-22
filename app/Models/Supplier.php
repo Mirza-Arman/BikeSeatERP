@@ -15,11 +15,13 @@ class Supplier extends Model
         'company_name',
         'contact_person',
         'phone',
+        'whatsapp',
         'email',
         'address',
         'city',
         'balance',
         'status',
+        'notes',
     ];
 
     protected $casts = [
@@ -37,5 +39,10 @@ class Supplier extends Model
     public function payments(): HasMany
     {
         return $this->hasMany(PurchasePayment::class);
+    }
+
+    public function rawMaterials(): HasMany
+    {
+        return $this->hasMany(RawMaterial::class);
     }
 }
