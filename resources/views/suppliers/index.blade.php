@@ -7,7 +7,7 @@
         title="Suppliers" 
         subtitle="Manage your supplier directory and vendor relationships"
         :actions="[
-            '<a href=\"' . route('erp.suppliers.create') . '\" class=\"inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors\"><x-heroicon-plus class=\"h-5 w-5\" />New Supplier</a>'
+            '<a href=\"' . route('erp.suppliers.create') . '\" class=\"inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors\"><x-heroicon-o-plus class=\"h-5 w-5\" />New Supplier</a>'
         ]"
     />
 
@@ -15,7 +15,7 @@
         {{-- Filters --}}
         <div class="flex flex-col md:flex-row gap-4 mb-6">
             <div class="flex-1 relative">
-                <x-heroicon-magnifying-glass class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <x-heroicon-o-magnifying-glass class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input 
                     type="text" 
                     name="search" 
@@ -31,7 +31,7 @@
                     <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
                 </select>
                 <button type="submit" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
-                    <x-heroicon-arrow-path class="h-5 w-5" />
+                    <x-heroicon-o-arrow-path class="h-5 w-5" />
                 </button>
             </div>
         </div>
@@ -76,18 +76,18 @@
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex items-center justify-end gap-2">
                                     <a href="{{ route('erp.suppliers.show', $supplier) }}" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="View">
-                                        <x-heroicon-eye class="h-5 w-5" />
+                                        <x-heroicon-o-eye class="h-5 w-5" />
                                     </a>
                                     <a href="{{ route('erp.suppliers.edit', $supplier) }}" class="p-2 text-orange-600 hover:bg-orange-50 rounded-lg transition-colors" title="Edit">
-                                        <x-heroicon-pencil class="h-5 w-5" />
+                                        <x-heroicon-o-pencil class="h-5 w-5" />
                                     </a>
                                     <form action="{{ route('erp.suppliers.toggle-status', $supplier) }}" method="POST" class="inline">
                                         @csrf
                                         <button type="submit" class="p-2 {{ $supplier->status === 'active' ? 'text-gray-600 hover:bg-gray-50' : 'text-emerald-600 hover:bg-emerald-50' }} rounded-lg transition-colors" title="{{ $supplier->status === 'active' ? 'Deactivate' : 'Activate' }}">
                                             @if ($supplier->status === 'active')
-                                                <x-heroicon-x-circle class="h-5 w-5" />
+                                                <x-heroicon-o-x-circle class="h-5 w-5" />
                                             @else
-                                                <x-heroicon-check-circle class="h-5 w-5" />
+                                                <x-heroicon-o-check-circle class="h-5 w-5" />
                                             @endif
                                         </button>
                                     </form>
@@ -95,7 +95,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
-                                            <x-heroicon-trash class="h-5 w-5" />
+                                            <x-heroicon-o-trash class="h-5 w-5" />
                                         </button>
                                     </form>
                                 </div>
@@ -105,7 +105,7 @@
                         <tr>
                             <td colspan="7" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center justify-center">
-                                    <x-heroicon-truck class="h-12 w-12 text-gray-400 mb-3" />
+                                    <x-heroicon-o-truck class="h-12 w-12 text-gray-400 mb-3" />
                                     <p class="text-gray-500">No suppliers found</p>
                                     <a href="{{ route('erp.suppliers.create') }}" class="mt-2 text-blue-600 hover:text-blue-700">Add your first supplier</a>
                                 </div>

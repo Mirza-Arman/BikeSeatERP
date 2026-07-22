@@ -25,7 +25,7 @@ $icon = $icons[$variant] ?? $icons['info'];
 <div class="border-l-4 rounded-lg p-4 {{ $variantClass }}" x-data="{ show: true }" x-show="show" x-transition>
     <div class="flex items-start">
         <div class="flex-shrink-0">
-            <x-heroicon-{{ $icon }} class="h-5 w-5" />
+            <x-heroicon-o-{{ $icon }} class="h-5 w-5" />
         </div>
         <div class="ml-3 flex-1">
             {{ $slot }}
@@ -33,7 +33,7 @@ $icon = $icons[$variant] ?? $icons['info'];
         @if ($dismissible)
             <div class="ml-auto pl-3">
                 <button @click="show = false" class="inline-flex rounded-lg p-1.5 hover:bg-black/10 focus:outline-none focus:ring-2 focus:ring-offset-2">
-                    <x-heroicon-x-mark class="h-5 w-5" />
+                    <x-heroicon-o-x-mark class="h-5 w-5" />
                 </button>
             </div>
         @endif

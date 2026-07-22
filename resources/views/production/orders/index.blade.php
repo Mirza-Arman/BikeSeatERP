@@ -11,7 +11,7 @@
                 <p class="text-gray-600 mt-2">Manage production orders and track manufacturing progress</p>
             </div>
             <a href="{{ route('erp.production.orders.create') }}" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 hover:shadow-md active:scale-95">
-                <x-heroicon-plus class="h-5 w-5" />
+                <x-heroicon-o-plus class="h-5 w-5" />
                 New Order
             </a>
         </div>
@@ -48,14 +48,14 @@
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex items-center justify-end gap-2">
                                     <a href="{{ route('erp.production.orders.show', $productionOrder) }}" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="View">
-                                        <x-heroicon-eye class="h-5 w-5" />
+                                        <x-heroicon-o-eye class="h-5 w-5" />
                                     </a>
                                     @if ($productionOrder->status !== 'completed')
                                         <form action="{{ route('erp.production.orders.status', $productionOrder) }}" method="POST" class="inline">
                                             @csrf
                                             <input type="hidden" name="status" value="completed">
                                             <button type="submit" class="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors" title="Complete">
-                                                <x-heroicon-check-circle class="h-5 w-5" />
+                                                <x-heroicon-o-check-circle class="h-5 w-5" />
                                             </button>
                                         </form>
                                     @endif
@@ -66,10 +66,10 @@
                         <tr>
                             <td colspan="5" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center justify-center">
-                                    <x-heroicon-cog class="h-12 w-12 text-gray-400 mb-3" />
+                                    <x-heroicon-o-cog class="h-12 w-12 text-gray-400 mb-3" />
                                     <p class="text-gray-500">No production orders found</p>
                                     <a href="{{ route('erp.production.orders.create') }}" class="mt-4 inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium">
-                                        <x-heroicon-plus class="h-5 w-5" />
+                                        <x-heroicon-o-plus class="h-5 w-5" />
                                         Create your first production order
                                     </a>
                                 </div>

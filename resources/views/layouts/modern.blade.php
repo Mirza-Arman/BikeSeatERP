@@ -98,7 +98,7 @@
                     </a>
 
                     <a href="{{ route('erp.reports.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('erp/reports*') ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <x-heroicon-chart-bar class="h-5 w-5" />
+                        <x-heroicon-o-chart-bar class="h-5 w-5" />
                         Reports
                     </a>
 
@@ -156,7 +156,7 @@
 
                         {{-- Notifications --}}
                         <button class="relative p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                            <x-heroicon-bell class="h-6 w-6" />
+                            <x-heroicon-o-bell class="h-6 w-6" />
                             <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                         </button>
 

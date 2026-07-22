@@ -40,7 +40,7 @@ $sizeClasses = $sizes[$size] ?? $sizes['md'];
         <span>Loading...</span>
     @else
         @if ($icon)
-            <x-heroicon-{{ $icon }} class="h-5 w-5" />
+            <x-heroicon-o-{{ $icon }} class="h-5 w-5" />
         @endif
         {{ $slot }}
     @endif

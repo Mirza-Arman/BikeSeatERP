@@ -50,7 +50,7 @@
                 {{-- Stock Information --}}
                 <div class="mb-8">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                        <x-heroicon-chart-bar class="h-5 w-5 text-blue-600" />
+                        <x-heroicon-o-chart-bar class="h-5 w-5 text-blue-600" />
                         Stock Information
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

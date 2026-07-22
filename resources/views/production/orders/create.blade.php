@@ -69,7 +69,7 @@
                 {{-- Formula Preview --}}
                 <div id="formula-preview" class="mb-8 hidden">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                        <x-heroicon-chart-bar class="h-5 w-5 text-blue-600" />
+                        <x-heroicon-o-chart-bar class="h-5 w-5 text-blue-600" />
                         Formula Preview
                     </h3>
                     <div class="overflow-x-auto rounded-lg border border-gray-200">

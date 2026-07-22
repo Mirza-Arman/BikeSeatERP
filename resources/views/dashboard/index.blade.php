@@ -14,7 +14,7 @@
             <x-ui-stats-card 
                 :title="$card['title']" 
                 :value="$card['value']" 
-                :icon="str_replace('fas fa-', '', $card['icon'])"
+                :icon="'o-' . str_replace('fas fa-', '', $card['icon'])"
                 :color="match($card['class']) {
                     'bg-primary-gradient' => 'blue',
                     'bg-success-gradient' => 'emerald',
@@ -36,7 +36,7 @@
             <x-ui-card>
                 <div class="flex items-center justify-between mb-6">
                     <h3 class="text-lg font-semibold text-gray-900">Production Overview</h3>
-                    <x-heroicon-chart-bar class="h-5 w-5 text-gray-400" />
+                    <x-heroicon-o-chart-bar class="h-5 w-5 text-gray-400" />
                 </div>
 
                 <div class="grid grid-cols-3 gap-4 mb-6">
@@ -94,14 +94,14 @@
             <x-ui-card>
                 <div class="flex items-center justify-between mb-6">
                     <h3 class="text-lg font-semibold text-gray-900">Recent Activities</h3>
-                    <x-heroicon-clock class="h-5 w-5 text-gray-400" />
+                    <x-heroicon-o-clock class="h-5 w-5 text-gray-400" />
                 </div>
 
                 <div class="space-y-4">
                     @forelse($activities as $activity)
                         <div class="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
                             <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <x-heroicon-bell class="h-4 w-4 text-blue-600" />
+                                <x-heroicon-o-bell class="h-4 w-4 text-blue-600" />
                             </div>
                             <div class="flex-1 min-w-0">
                                 <p class="text-sm font-medium text-gray-900">{{ $activity['title'] }}</p>
@@ -180,7 +180,7 @@
 
             <div class="h-64 bg-gray-50 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
                 <div class="text-center">
-                    <x-heroicon-chart-bar class="h-16 w-16 text-gray-400 mx-auto mb-3" />
+                    <x-heroicon-o-chart-bar class="h-16 w-16 text-gray-400 mx-auto mb-3" />
                     <p class="text-gray-500">Chart placeholder</p>
                     <p class="text-sm text-gray-400">Charts will be integrated here</p>
                 </div>

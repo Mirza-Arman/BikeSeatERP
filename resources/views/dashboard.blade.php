@@ -91,7 +91,7 @@
             </div>
             <div class="h-64 bg-gray-50 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
                 <div class="text-center">
-                    <x-heroicon-chart-bar class="h-12 w-12 text-gray-400 mx-auto mb-2" />
+                    <x-heroicon-o-chart-bar class="h-12 w-12 text-gray-400 mx-auto mb-2" />
                     <p class="text-gray-500 text-sm">Chart placeholder</p>
                     <p class="text-gray-400 text-xs">Chart.js integration pending</p>
                 </div>
@@ -106,7 +106,7 @@
             </div>
             <div class="h-64 bg-gray-50 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
                 <div class="text-center">
-                    <x-heroicon-chart-bar class="h-12 w-12 text-gray-400 mx-auto mb-2" />
+                    <x-heroicon-o-chart-bar class="h-12 w-12 text-gray-400 mx-auto mb-2" />
                     <p class="text-gray-500 text-sm">Chart placeholder</p>
                     <p class="text-gray-400 text-xs">Chart.js integration pending</p>
                 </div>
@@ -136,7 +136,7 @@
             </div>
             <div class="h-48 bg-gray-50 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
                 <div class="text-center">
-                    <x-heroicon-chart-bar class="h-10 w-10 text-gray-400 mx-auto mb-2" />
+                    <x-heroicon-o-chart-bar class="h-10 w-10 text-gray-400 mx-auto mb-2" />
                     <p class="text-gray-500 text-sm">Chart placeholder</p>
                 </div>
             </div>

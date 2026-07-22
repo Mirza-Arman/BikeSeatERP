@@ -8,7 +8,7 @@
             <li class="flex items-center">
                 @if ($index === 0)
                     <a href="{{ $item['url'] }}" class="text-gray-500 hover:text-gray-700 transition-colors">
-                        <x-heroicon-home class="h-5 w-5" />
+                        <x-heroicon-o-home class="h-5 w-5" />
                     </a>
                 @elseif ($index === count($items) - 1)
                     <span class="ml-2 text-gray-900 font-medium">{{ $item['title'] }}</span>
@@ -19,7 +19,7 @@
                 @endif
                 
                 @if ($index < count($items) - 1)
-                    <x-heroicon-chevron-right class="h-4 w-4 ml-2 text-gray-400" />
+                    <x-heroicon-o-chevron-right class="h-4 w-4 ml-2 text-gray-400" />
                 @endif
             </li>
         @endforeach

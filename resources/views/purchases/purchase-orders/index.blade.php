@@ -33,7 +33,7 @@
         <x-ui-card padding="sm">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
-                    <x-heroicon-chart-bar class="h-5 w-5 text-emerald-600" />
+                    <x-heroicon-o-chart-bar class="h-5 w-5 text-emerald-600" />
                 </div>
                 <div>
                     <p class="text-xs text-gray-500">Monthly Purchases</p>
@@ -44,7 +44,7 @@
         <x-ui-card padding="sm">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                    <x-heroicon-clock class="h-5 w-5 text-orange-600" />
+                    <x-heroicon-o-clock class="h-5 w-5 text-orange-600" />
                 </div>
                 <div>
                     <p class="text-xs text-gray-500">Pending Orders</p>

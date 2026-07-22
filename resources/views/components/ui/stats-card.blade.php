@@ -29,13 +29,13 @@ $trendIcon = $trend === 'up' ? 'trending-up' : ($trend === 'down' ? 'trending-do
             <p class="text-3xl font-bold text-gray-900 mt-1">{{ $value }}</p>
             @if ($trend && $trendValue)
                 <p class="text-sm {{ $trendColor }} mt-2 flex items-center gap-1">
-                    <x-heroicon-{{ $trendIcon }} class="h-4 w-4" />
+                    <x-heroicon-o-{{ $trendIcon }} class="h-4 w-4" />
                     {{ $trendValue }}
                 </p>
             @endif
         </div>
         <div class="p-3 rounded-lg {{ $colorClass }}">
-            <x-heroicon-{{ $icon }} class="h-8 w-8" />
+            <x-heroicon-o-{{ $icon }} class="h-8 w-8" />
         </div>
     </div>
 </div>

@@ -24,7 +24,7 @@
                 <tr>
                     <td colspan="{{ count($headers) }}" class="px-6 py-12 text-center">
                         <div class="flex flex-col items-center justify-center">
-                            <x-heroicon-inbox class="h-12 w-12 text-gray-400 mb-3" />
+                            <x-heroicon-o-inbox class="h-12 w-12 text-gray-400 mb-3" />
                             <p class="text-gray-500">{{ $empty }}</p>
                         </div>
                     </td>
