@@ -3,7 +3,7 @@
 @section('title', 'Edit Supplier')
 
 @section('content')
-    <x-ui-page-header 
+    <x-ui.page-header 
         title="Edit Supplier" 
         subtitle="Update supplier information"
         :actions="[

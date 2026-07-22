@@ -3,7 +3,7 @@
 @section('title', 'Raw Materials')
 
 @section('content')
-    <x-ui-page-header 
+    <x-ui.page-header 
         title="Raw Materials" 
         subtitle="Manage your material inventory and stock levels"
         :actions="[

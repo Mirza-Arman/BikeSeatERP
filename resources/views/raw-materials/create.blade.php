@@ -3,7 +3,7 @@
 @section('title', 'Create Raw Material')
 
 @section('content')
-    <x-ui-page-header 
+    <x-ui.page-header 
         title="Create Raw Material" 
         subtitle="Add a new material to your inventory"
         :actions="[
@@ -189,65 +189,6 @@
                     `;
                     attributesContainer.appendChild(div);
                 });
-            });
-        });
-    </script>
-@endsection
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Current Stock</label>
-                            <input type="number" name="current_stock" class="form-control" step="0.01" value="0">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Purchase Price</label>
-                            <input type="number" name="purchase_price" class="form-control" step="0.01" value="0">
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea name="description" class="form-control" rows="3"></textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Status</label>
-                            <select name="status" class="form-control">
-                                <option value="active">Active</option>
-                                <option value="inactive">Inactive</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Save Material</button>
-                <a href="{{ route('erp.raw-materials.index') }}" class="btn btn-secondary">Cancel</a>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        const categorySelect = document.getElementById('category-select');
-        const attributesContainer = document.getElementById('attributes-container');
-
-        categorySelect.addEventListener('change', function() {
-            const selectedOption = this.options[this.selectedIndex];
-            const attributes = selectedOption.dataset.attributes ? JSON.parse(selectedOption.dataset.attributes) : [];
-
-            attributesContainer.innerHTML = '';
-
-            attributes.forEach(attr => {
-                const col = document.createElement('div');
-                col.className = 'col-md-4';
-                col.innerHTML = `
-                    <div class="form-group">
-                        <label>${attr.attribute_name} ${attr.is_required ? '*' : ''}</label>
-                        <input type="text" name="attributes[${attr.attribute_name}]" class="form-control" ${attr.is_required ? 'required' : ''}>
-                    </div>
-                `;
-                attributesContainer.appendChild(col);
             });
         });
     </script>

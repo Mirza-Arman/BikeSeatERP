@@ -25,9 +25,7 @@ class DashboardService
         $todayPurchases = PurchaseOrder::whereDate('purchase_date', Carbon::today())->sum('grand_total');
         $pendingPurchaseOrders = PurchaseOrder::where('status', 'pending')->count();
         $supplierOutstanding = Supplier::where('balance', '>', 0)->sum('balance');
-        $overduePurchaseOrders = PurchaseOrder::where('status', '!=', 'completed')
-            ->where('expected_delivery', '<', Carbon::today())
-            ->count();
+        $overduePurchaseOrders = 0;
 
         return [
             [
@@ -230,19 +228,6 @@ class DashboardService
                 ];
             });
 
-        $overduePurchaseOrders = PurchaseOrder::where('status', '!=', 'completed')
-            ->where('expected_delivery', '<', Carbon::today())
-            ->latest()
-            ->limit(5)
-            ->get()
-            ->map(function (PurchaseOrder $order) {
-                return [
-                    'type' => 'danger',
-                    'message' => "Overdue PO: {$order->purchase_number} from {$order->supplier->company_name}",
-                    'url' => route('purchases.purchase-orders.show', $order),
-                ];
-            });
-
-        return $lowStockMaterials->concat($overduePurchaseOrders)->toArray();
+        return $lowStockMaterials->toArray();
     }
 }

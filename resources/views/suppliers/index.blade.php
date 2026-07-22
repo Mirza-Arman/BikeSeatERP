@@ -3,7 +3,7 @@
 @section('title', 'Suppliers')
 
 @section('content')
-    <x-ui-page-header 
+    <x-ui.page-header 
         title="Suppliers" 
         subtitle="Manage your supplier directory and vendor relationships"
         :actions="[

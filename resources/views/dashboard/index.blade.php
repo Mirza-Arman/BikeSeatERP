@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    <x-ui-page-header 
+    <x-ui.page-header 
         title="Dashboard" 
         subtitle="Welcome back, {{ auth()->user()->name }}! Here's what's happening today."
     />

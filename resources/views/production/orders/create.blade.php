@@ -1,75 +1,107 @@
-@extends('layouts.app')
+@extends('layouts.modern')
 
 @section('title', 'Create Production Order')
-@section('page-title', 'Create Production Order')
 
 @section('content')
-    <div class="card">
-        <div class="card-body">
-            @if(session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                    @if(session('stock_issues'))
-                        <ul class="mt-2">
-                            @foreach(session('stock_issues') as $issue)
-                                <li>{{ $issue['material'] }}: Required {{ number_format($issue['required'], 2) }}, Available {{ number_format($issue['available'], 2) }}, Shortage {{ number_format($issue['shortage'], 2) }}</li>
-                            @endforeach
-                        </ul>
-                    @endif
-                </div>
-            @endif
-            
+    {{-- Page Header --}}
+    <div class="mb-8">
+        <div class="flex items-center gap-4">
+            <a href="{{ route('erp.production.orders.index') }}" class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                <x-heroicon-arrow-left class="h-6 w-6" />
+            </a>
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900">Create Production Order</h1>
+                <p class="text-gray-600 mt-2">Create a new production order for manufacturing</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-4xl">
+        @if(session('error'))
+            <x-ui.alert variant="danger">
+                {{ session('error') }}
+                @if(session('stock_issues'))
+                    <ul class="mt-2 list-disc list-inside">
+                        @foreach(session('stock_issues') as $issue)
+                            <li>{{ $issue['material'] }}: Required {{ number_format($issue['required'], 2) }}, Available {{ number_format($issue['available'], 2) }}, Shortage {{ number_format($issue['shortage'], 2) }}</li>
+                        @endforeach
+                    </ul>
+                @endif
+            </x-ui.alert>
+        @endif
+
+        <x-ui-card>
             <form method="POST" action="{{ route('erp.production.orders.store') }}">
                 @csrf
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label>Product</label>
-                        <select name="product_id" class="form-control" required id="product-select">
-                            <option value="">Select product</option>
-                            @foreach ($products as $product)
-                                <option value="{{ $product->id }}" data-formula="{{ $product->productionFormula ? 'yes' : 'no' }}">{{ $product->product_name }}</option>
-                            @endforeach
-                        </select>
-                        <small class="text-muted" id="formula-status"></small>
+                
+                {{-- Basic Information --}}
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                        <x-heroicon-cube class="h-5 w-5 text-blue-600" />
+                        Basic Information
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Product <span class="text-red-500">*</span></label>
+                            <select name="product_id" required id="product-select" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none">
+                                <option value="">Select Product</option>
+                                @foreach ($products as $product)
+                                    <option value="{{ $product->id }}" data-formula="{{ $product->productionFormula ? 'yes' : 'no' }}">{{ $product->product_name }}</option>
+                                @endforeach
+                            </select>
+                            <p class="text-sm mt-1" id="formula-status"></p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Quantity to Produce <span class="text-red-500">*</span></label>
+                            <input type="number" step="0.01" name="quantity_to_produce" required id="quantity-input" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none" placeholder="0.00">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Production Date <span class="text-red-500">*</span></label>
+                            <input type="date" name="production_date" value="{{ now()->format('Y-m-d') }}" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none">
+                        </div>
                     </div>
-                    <div class="col-md-6 form-group">
-                        <label>Quantity to Produce</label>
-                        <input type="number" step="0.01" name="quantity_to_produce" class="form-control" required id="quantity-input">
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label>Production Date</label>
-                        <input type="date" name="production_date" class="form-control" value="{{ date('Y-m-d') }}" required>
-                    </div>
-                    <div class="col-md-12 form-group">
-                        <label>Remarks</label>
-                        <textarea name="remarks" class="form-control"></textarea>
+                    <div class="mt-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Remarks</label>
+                        <textarea name="remarks" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none resize-none" placeholder="Any additional notes..."></textarea>
                     </div>
                 </div>
                 
-                <div id="formula-preview" class="mt-3" style="display: none;">
-                    <hr>
-                    <h5>Formula Preview</h5>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
+                {{-- Formula Preview --}}
+                <div id="formula-preview" class="mb-8 hidden">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                        <x-heroicon-chart-bar class="h-5 w-5 text-blue-600" />
+                        Formula Preview
+                    </h3>
+                    <div class="overflow-x-auto rounded-lg border border-gray-200">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
                                 <tr>
-                                    <th>Material</th>
-                                    <th>Required per Unit</th>
-                                    <th>Available Stock</th>
-                                    <th>Total Required</th>
-                                    <th>Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Material</th>
+                                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Required per Unit</th>
+                                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Available Stock</th>
+                                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Total Required</th>
+                                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
                                 </tr>
                             </thead>
-                            <tbody id="formula-items">
+                            <tbody id="formula-items" class="bg-white divide-y divide-gray-200">
                             </tbody>
                         </table>
                     </div>
                 </div>
                 
-                <button type="submit" class="btn btn-primary">Create Order</button>
-                <a href="{{ route('erp.production.orders.index') }}" class="btn btn-secondary">Cancel</a>
+                {{-- Actions --}}
+                <div class="flex items-center justify-end gap-4 pt-6 border-t border-gray-200">
+                    <a href="{{ route('erp.production.orders.index') }}" class="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                        <x-heroicon-x-mark class="h-5 w-5" />
+                        Cancel
+                    </a>
+                    <button type="submit" class="inline-flex items-center justify-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        <x-heroicon-check class="h-5 w-5" />
+                        Create Order
+                    </button>
+                </div>
             </form>
-        </div>
+        </x-ui-card>
     </div>
     
     <script>
@@ -84,25 +116,26 @@
             
             if (formulaData && formulaData.formula) {
                 formulaStatus.textContent = 'Formula available';
-                formulaStatus.className = 'text-success';
-                formulaPreview.style.display = 'block';
+                formulaStatus.className = 'text-sm text-emerald-600';
+                formulaPreview.classList.remove('hidden');
                 
                 formulaItems.innerHTML = '';
                 formulaData.formula.items.forEach(item => {
-                    const row =document.createElement('tr');
+                    const row = document.createElement('tr');
+                    row.className = 'hover:bg-gray-50 transition-colors';
                     row.innerHTML = `
-                        <td>${item.rawMaterial.name}</td>
-                        <td>${item.quantity_required} ${item.unit || item.rawMaterial.unit}</td>
-                        <td>${item.rawMaterial.current_stock} ${item.rawMaterial.unit}</td>
-                        <td id="required-${item.rawMaterial.id}">-</td>
-                        <td id="status-${item.rawMaterial.id}">-</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${item.rawMaterial.name}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${item.quantity_required} ${item.unit || item.rawMaterial.unit}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${item.rawMaterial.current_stock} ${item.rawMaterial.unit}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" id="required-${item.rawMaterial.id}">-</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm" id="status-${item.rawMaterial.id}">-</td>
                     `;
                     formulaItems.appendChild(row);
                 });
             } else {
                 formulaStatus.textContent = 'No formula available for this product';
-                formulaStatus.className = 'text-danger';
-                formulaPreview.style.display = 'none';
+                formulaStatus.className = 'text-sm text-red-600';
+                formulaPreview.classList.add('hidden');
             }
         });
         
@@ -123,10 +156,10 @@
                         
                         if (available >= required) {
                             statusCell.textContent = 'Sufficient';
-                            statusCell.className = 'text-success';
+                            statusCell.className = 'px-6 py-4 whitespace-nowrap text-sm text-emerald-600 font-medium';
                         } else {
                             statusCell.textContent = `Insufficient (Shortage: ${(required - available).toFixed(2)})`;
-                            statusCell.className = 'text-danger';
+                            statusCell.className = 'px-6 py-4 whitespace-nowrap text-sm text-red-600 font-medium';
                         }
                     }
                 });
