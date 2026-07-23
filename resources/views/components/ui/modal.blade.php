@@ -2,6 +2,7 @@
     'id' => null,
     'title' => null,
     'maxWidth' => 'md',
+    'trigger' => null,
 ])
 
 @php

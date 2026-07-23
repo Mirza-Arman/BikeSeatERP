@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <x-ui-card>
+    <x-ui.card>
         {{-- Filters --}}
         <form method="GET" class="flex flex-col sm:flex-row gap-4 mb-6">
             <div class="flex-1 relative">
@@ -57,9 +57,9 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">PKR {{ number_format($product->selling_price, 2) }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if ($product->status === 'active')
-                                    <x-ui-badge variant="success">Active</x-ui-badge>
+                                    <x-ui.badge variant="success">Active</x-ui.badge>
                                 @else
-                                    <x-ui-badge variant="secondary">Inactive</x-ui-badge>
+                                    <x-ui.badge variant="secondary">Inactive</x-ui.badge>
                                 @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -109,7 +109,7 @@
                 {{ $products->links('pagination::tailwind') }}
             </div>
         @endif
-    </x-ui-card>
+    </x-ui.card>
 
     {{-- Delete Confirmation Modal --}}
     <x-ui.modal id="deleteModal" title="Delete Product">

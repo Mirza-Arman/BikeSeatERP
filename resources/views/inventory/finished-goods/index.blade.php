@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.modern')
 
 @section('title', 'Finished Goods')
 @section('page-title', 'Finished Goods')

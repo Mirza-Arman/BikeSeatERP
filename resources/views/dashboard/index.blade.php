@@ -33,7 +33,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         {{-- Production Overview --}}
         <div class="lg:col-span-2">
-            <x-ui-card>
+            <x-ui.card>
                 <div class="flex items-center justify-between mb-6">
                     <h3 class="text-lg font-semibold text-gray-900">Production Overview</h3>
                     <x-heroicon-o-chart-bar class="h-5 w-5 text-gray-400" />
@@ -86,12 +86,12 @@
                         <div class="bg-emerald-500 h-2 rounded-full transition-all duration-500" style="width: {{ $completedPercent }}%"></div>
                     </div>
                 </div>
-            </x-ui-card>
+            </x-ui.card>
         </div>
 
         {{-- Recent Activities --}}
         <div>
-            <x-ui-card>
+            <x-ui.card>
                 <div class="flex items-center justify-between mb-6">
                     <h3 class="text-lg font-semibold text-gray-900">Recent Activities</h3>
                     <x-heroicon-o-clock class="h-5 w-5 text-gray-400" />
@@ -116,13 +116,13 @@
                         </div>
                     @endforelse
                 </div>
-            </x-ui-card>
+            </x-ui.card>
         </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {{-- Quick Access --}}
-        <x-ui-card>
+        <x-ui.card>
             <div class="flex items-center justify-between mb-6">
                 <h3 class="text-lg font-semibold text-gray-900">Quick Access</h3>
                 <x-heroicon-o-bolt class="h-5 w-5 text-gray-400" />
@@ -169,10 +169,10 @@
                     </div>
                 </a>
             </div>
-        </x-ui-card>
+        </x-ui.card>
 
         {{-- Chart Placeholder --}}
-        <x-ui-card>
+        <x-ui.card>
             <div class="flex items-center justify-between mb-6">
                 <h3 class="text-lg font-semibold text-gray-900">Monthly Overview</h3>
                 <x-heroicon-o-chart-pie class="h-5 w-5 text-gray-400" />
@@ -185,6 +185,6 @@
                     <p class="text-sm text-gray-400">Charts will be integrated here</p>
                 </div>
             </div>
-        </x-ui-card>
+        </x-ui.card>
     </div>
 @endsection

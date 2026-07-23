@@ -151,17 +151,17 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <x-ui-badge :variant="$material->current_stock <= $material->minimum_stock ? 'warning' : 'success'">
+                                <x-ui.badge :variant="$material->current_stock <= $material->minimum_stock ? 'warning' : 'success'">
                                     {{ number_format($material->current_stock, 2) }} {{ $material->unit }}
-                                </x-ui-badge>
+                                </x-ui.badge>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                 {{ number_format($material->average_cost, 2) }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <x-ui-badge :variant="$material->status === 'active' ? 'success' : 'secondary'">
+                                <x-ui.badge :variant="$material->status === 'active' ? 'success' : 'secondary'">
                                     {{ ucfirst($material->status) }}
-                                </x-ui-badge>
+                                </x-ui.badge>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex items-center justify-end gap-2">

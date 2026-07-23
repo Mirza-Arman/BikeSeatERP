@@ -147,20 +147,20 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">PKR {{ number_format($order->grand_total, 2) }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if ($order->status === 'completed')
-                                    <x-ui-badge variant="success">Completed</x-ui-badge>
+                                    <x-ui.badge variant="success">Completed</x-ui.badge>
                                 @elseif ($order->status === 'partial')
-                                    <x-ui-badge variant="warning">Partial</x-ui-badge>
+                                    <x-ui.badge variant="warning">Partial</x-ui.badge>
                                 @else
-                                    <x-ui-badge variant="secondary">Pending</x-ui-badge>
+                                    <x-ui.badge variant="secondary">Pending</x-ui.badge>
                                 @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if ($order->payment_status === 'paid')
-                                    <x-ui-badge variant="success">Paid</x-ui-badge>
+                                    <x-ui.badge variant="success">Paid</x-ui.badge>
                                 @elseif ($order->payment_status === 'partial')
-                                    <x-ui-badge variant="warning">Partial</x-ui-badge>
+                                    <x-ui.badge variant="warning">Partial</x-ui.badge>
                                 @else
-                                    <x-ui-badge variant="danger">Unpaid</x-ui-badge>
+                                    <x-ui.badge variant="danger">Unpaid</x-ui.badge>
                                 @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

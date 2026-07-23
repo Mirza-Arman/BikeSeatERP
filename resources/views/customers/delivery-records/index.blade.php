@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.modern')
 
 @section('title', 'Delivery Records')
 @section('page-title', 'Delivery Records')

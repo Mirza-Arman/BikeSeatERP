@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.modern')
 
 @section('title', 'Material Consumption')
 @section('page-title', 'Material Consumption')

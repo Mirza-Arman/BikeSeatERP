@@ -17,7 +17,7 @@
     </div>
 
     <div class="max-w-4xl">
-        <x-ui-card>
+        <x-ui.card>
             <form method="POST" action="{{ route('erp.employees.update', $employee) }}">
                 @csrf
                 @method('PUT')
@@ -105,6 +105,6 @@
                     </button>
                 </div>
             </form>
-        </x-ui-card>
+        </x-ui.card>
     </div>
 @endsection

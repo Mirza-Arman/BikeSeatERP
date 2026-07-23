@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.modern')
 
 @section('title', 'Add Payment')
 @section('page-title', 'Add Payment - {{ $purchaseOrder->purchase_number }}')

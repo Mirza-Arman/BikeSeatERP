@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.modern')
 
 @section('title', 'Supplier Ledger')
 @section('page-title', 'Supplier Ledger - Outstanding Balances')

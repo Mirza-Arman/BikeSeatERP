@@ -1,3 +1,7 @@
+@php
+    $menuItems = config('erp.menu', []);
+@endphp
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
 <head>
@@ -35,7 +39,7 @@
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="bg-gray-50 h-full" x-data="{ sidebarOpen: false }">
+<body class="bg-gray-50 h-full" x-data="{ sidebarOpen: false, openMenus: {} }">
     <div class="flex h-full overflow-hidden">
         
         {{-- Sidebar --}}
@@ -62,50 +66,53 @@
 
                 {{-- Navigation --}}
                 <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('dashboard') ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <x-heroicon-o-home class="h-5 w-5" />
-                        Dashboard
-                    </a>
-
-                    <a href="{{ route('erp.suppliers.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('erp/suppliers*') ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <x-heroicon-o-truck class="h-5 w-5" />
-                        Suppliers
-                    </a>
-
-                    <a href="{{ route('erp.raw-materials.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('erp/raw-materials*') ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <x-heroicon-o-cube class="h-5 w-5" />
-                        Raw Materials
-                    </a>
-
-                    <a href="{{ route('purchases.purchase-orders.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('purchases*') ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <x-heroicon-o-shopping-cart class="h-5 w-5" />
-                        Purchase Management
-                    </a>
-
-                    <a href="{{ route('erp.production.orders.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('erp/production*') ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <x-heroicon-o-cog class="h-5 w-5" />
-                        Production
-                    </a>
-
-                    <a href="{{ route('erp.inventory.stock.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('erp/inventory*') ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <x-heroicon-o-archive-box class="h-5 w-5" />
-                        Inventory
-                    </a>
-
-                    <a href="{{ route('erp.customers.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('erp/customers*') ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <x-heroicon-o-users class="h-5 w-5" />
-                        Customers
-                    </a>
-
-                    <a href="{{ route('erp.reports.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('erp/reports*') ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <x-heroicon-o-chart-bar class="h-5 w-5" />
-                        Reports
-                    </a>
-
-                    <a href="{{ route('erp.settings.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('erp/settings*') ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <x-heroicon-o-cog-6-tooth class="h-5 w-5" />
-                        Settings
-                    </a>
+                    @foreach ($menuItems as $item)
+                        @if (isset($item['children']))
+                            @php
+                                $isOpen = isset($item['active']) && request()->routeIs($item['active']);
+                                $menuKey = 'menu-' . $item['title'];
+                            @endphp
+                            <div x-data="{ isOpen: {{ $isOpen ? 'true' : 'false' }} }">
+                                <button 
+                                    @click="isOpen = !isOpen"
+                                    class="w-full flex items-center justify-between gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->routeIs($item['active']) ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}"
+                                >
+                                    <div class="flex items-center gap-3">
+                                        <x-heroicon-o-cube class="h-5 w-5" />
+                                        {{ $item['title'] }}
+                                    </div>
+                                    <x-heroicon-o-chevron-down 
+                                        class="h-4 w-4 transition-transform duration-200"
+                                        x-bind:class="isOpen ? 'rotate-180' : ''"
+                                    />
+                                </button>
+                                <div 
+                                    x-show="isOpen" 
+                                    x-transition:enter="transition-all duration-200 ease-out"
+                                    x-transition:enter-start="opacity-0 -translate-y-2"
+                                    x-transition:enter-end="opacity-100 translate-y-0"
+                                    x-transition:leave="transition-all duration-200 ease-in"
+                                    x-transition:leave-start="opacity-100 translate-y-0"
+                                    x-transition:leave-end="opacity-0 -translate-y-2"
+                                    class="pl-11 mt-1 space-y-1"
+                                >
+                                    @foreach ($item['children'] as $child)
+                                        <a 
+                                            href="{{ route($child['route']) }}"
+                                            class="block px-4 py-2 text-sm rounded-lg {{ request()->routeIs($child['route']) ? 'bg-primary-100 text-primary-700 font-medium' : 'text-gray-600 hover:bg-gray-100' }}"
+                                        >
+                                            {{ $child['title'] }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @else
+                            <a href="{{ route($item['route']) }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->routeIs($item['route']) ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                                <x-heroicon-o-home class="h-5 w-5" />
+                                {{ $item['title'] }}
+                            </a>
+                        @endif
+                    @endforeach
                 </nav>
 
                 {{-- User Profile --}}

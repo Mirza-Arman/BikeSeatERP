@@ -69,9 +69,9 @@
                                 {{ number_format($supplier->balance, 2) }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <x-ui-badge :variant="$supplier->status === 'active' ? 'success' : 'secondary'">
+                                <x-ui.badge :variant="$supplier->status === 'active' ? 'success' : 'secondary'">
                                     {{ ucfirst($supplier->status) }}
-                                </x-ui-badge>
+                                </x-ui.badge>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex items-center justify-end gap-2">

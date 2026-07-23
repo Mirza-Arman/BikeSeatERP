@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.modern')
 
 @section('title', 'Supplier Ledger - {{ $supplier->company_name }}')
 @section('page-title', 'Supplier Ledger - {{ $supplier->company_name }}')

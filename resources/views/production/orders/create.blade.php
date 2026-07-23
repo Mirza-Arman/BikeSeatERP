@@ -30,7 +30,7 @@
             </x-ui.alert>
         @endif
 
-        <x-ui-card>
+        <x-ui.card>
             <form method="POST" action="{{ route('erp.production.orders.store') }}">
                 @csrf
                 
@@ -101,7 +101,7 @@
                     </button>
                 </div>
             </form>
-        </x-ui-card>
+        </x-ui.card>
     </div>
     
     <script>

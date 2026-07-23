@@ -38,11 +38,11 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ number_format($productionOrder->quantity_to_produce, 2) }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if ($productionOrder->status === 'completed')
-                                    <x-ui-badge variant="success">Completed</x-ui-badge>
+                                    <x-ui.badge variant="success">Completed</x-ui.badge>
                                 @elseif ($productionOrder->status === 'in_progress')
-                                    <x-ui-badge variant="warning">In Progress</x-ui-badge>
+                                    <x-ui.badge variant="warning">In Progress</x-ui.badge>
                                 @else
-                                    <x-ui-badge variant="secondary">Pending</x-ui-badge>
+                                    <x-ui.badge variant="secondary">Pending</x-ui.badge>
                                 @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.modern')
 
 @section('title', 'Create Production Formula')
 @section('page-title', 'Create Production Formula')
