@@ -123,7 +123,7 @@
             </div>
             <div class="h-48 bg-gray-50 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
                 <div class="text-center">
-                    <x-heroicon-chart-pie class="h-10 w-10 text-gray-400 mx-auto mb-2" />
+                    <x-heroicon-o-chart-pie class="h-10 w-10 text-gray-400 mx-auto mb-2" />
                     <p class="text-gray-500 text-sm">Chart placeholder</p>
                 </div>
             </div>
@@ -149,7 +149,7 @@
             </div>
             <div class="h-48 bg-gray-50 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
                 <div class="text-center">
-                    <x-heroicon-chart-line class="h-10 w-10 text-gray-400 mx-auto mb-2" />
+                    <x-heroicon-o-chart-line class="h-10 w-10 text-gray-400 mx-auto mb-2" />
                     <p class="text-gray-500 text-sm">Chart placeholder</p>
                 </div>
             </div>

@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <x-ui-card>
+    <x-ui.card>
         {{-- Table --}}
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
@@ -89,5 +89,5 @@
                 {{ $productionOrders->links('pagination::tailwind') }}
             </div>
         @endif
-    </x-ui-card>
+    </x-ui.card>
 @endsection

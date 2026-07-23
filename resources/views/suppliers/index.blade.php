@@ -11,7 +11,7 @@
         ]"
     />
 
-    <x-ui-card>
+    <x-ui.card>
         {{-- Filters --}}
         <div class="flex flex-col md:flex-row gap-4 mb-6">
             <div class="flex-1 relative">
@@ -125,5 +125,5 @@
                 {{ $suppliers->links('pagination::tailwind') }}
             </div>
         @endif
-    </x-ui-card>
+    </x-ui.card>
 @endsection

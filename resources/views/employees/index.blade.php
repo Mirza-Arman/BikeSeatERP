@@ -11,7 +11,7 @@
                 <p class="text-gray-600 mt-2">Manage your workforce and employee information</p>
             </div>
             <a href="{{ route('erp.employees.create') }}" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 hover:shadow-md active:scale-95">
-                <x-heroicon-plus class="h-5 w-5" />
+                <x-heroicon-o-plus class="h-5 w-5" />
                 New Employee
             </a>
         </div>
@@ -21,14 +21,14 @@
         {{-- Filters --}}
         <form method="GET" class="flex flex-col sm:flex-row gap-4 mb-6">
             <div class="flex-1 relative">
-                <x-heroicon-magnifying-glass class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <x-heroicon-o-magnifying-glass class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="Search employees..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none">
             </div>
             <div class="flex gap-2">
                 <x-ui.button type="submit" variant="primary" icon="magnifying-glass">Search</x-ui.button>
                 @if (request('search'))
                     <a href="{{ route('erp.employees.index') }}" class="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
-                        <x-heroicon-arrow-path class="h-5 w-5" />
+                        <x-heroicon-o-arrow-path class="h-5 w-5" />
                         Reset
                     </a>
                 @endif
@@ -63,19 +63,19 @@
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex items-center justify-end gap-2">
                                     <a href="{{ route('erp.employees.show', $employee) }}" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="View">
-                                        <x-heroicon-eye class="h-5 w-5" />
+                                        <x-heroicon-o-eye class="h-5 w-5" />
                                     </a>
                                     <a href="{{ route('erp.employees.edit', $employee) }}" class="p-2 text-orange-600 hover:bg-orange-50 rounded-lg transition-colors" title="Edit">
-                                        <x-heroicon-pencil class="h-5 w-5" />
+                                        <x-heroicon-o-pencil class="h-5 w-5" />
                                     </a>
                                     <form action="{{ route('erp.employees.toggle-status', $employee) }}" method="POST" class="inline">
                                         @csrf
                                         <button type="submit" class="p-2 {{ $employee->status === 'active' ? 'text-gray-600 hover:bg-gray-50' : 'text-emerald-600 hover:bg-emerald-50' }} rounded-lg transition-colors" title="{{ $employee->status === 'active' ? 'Deactivate' : 'Activate' }}">
-                                            <x-heroicon-power class="h-5 w-5" />
+                                            <x-heroicon-o-power class="h-5 w-5" />
                                         </button>
                                     </form>
                                     <button onclick="confirmDelete('{{ route('erp.employees.destroy', $employee) }}')" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
-                                        <x-heroicon-trash class="h-5 w-5" />
+                                        <x-heroicon-o-trash class="h-5 w-5" />
                                     </button>
                                 </div>
                             </td>
@@ -84,10 +84,10 @@
                         <tr>
                             <td colspan="5" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center justify-center">
-                                    <x-heroicon-users class="h-12 w-12 text-gray-400 mb-3" />
+                                    <x-heroicon-o-users class="h-12 w-12 text-gray-400 mb-3" />
                                     <p class="text-gray-500">No employees found</p>
                                     <a href="{{ route('erp.employees.create') }}" class="mt-4 inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium">
-                                        <x-heroicon-plus class="h-5 w-5" />
+                                        <x-heroicon-o-plus class="h-5 w-5" />
                                         Add your first employee
                                     </a>
                                 </div>

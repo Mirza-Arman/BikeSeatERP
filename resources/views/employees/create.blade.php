@@ -7,7 +7,7 @@
     <div class="mb-8">
         <div class="flex items-center gap-4">
             <a href="{{ route('erp.employees.index') }}" class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-                <x-heroicon-arrow-left class="h-6 w-6" />
+                <x-heroicon-o-arrow-left class="h-6 w-6" />
             </a>
             <div>
                 <h1 class="text-3xl font-bold text-gray-900">Create Employee</h1>
@@ -24,7 +24,7 @@
                 {{-- Basic Information --}}
                 <div class="mb-8">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                        <x-heroicon-user class="h-5 w-5 text-blue-600" />
+                        <x-heroicon-o-user class="h-5 w-5 text-blue-600" />
                         Basic Information
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -55,7 +55,7 @@
                 {{-- Contact Information --}}
                 <div class="mb-8">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                        <x-heroicon-envelope class="h-5 w-5 text-blue-600" />
+                        <x-heroicon-o-envelope class="h-5 w-5 text-blue-600" />
                         Contact Information
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -77,7 +77,7 @@
                 {{-- Additional Information --}}
                 <div class="mb-8">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                        <x-heroicon-document-text class="h-5 w-5 text-blue-600" />
+                        <x-heroicon-o-document-text class="h-5 w-5 text-blue-600" />
                         Additional Information
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -95,11 +95,11 @@
                 {{-- Actions --}}
                 <div class="flex items-center justify-end gap-4 pt-6 border-t border-gray-200">
                     <a href="{{ route('erp.employees.index') }}" class="inline-flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
-                        <x-heroicon-x-mark class="h-5 w-5" />
+                        <x-heroicon-o-x-mark class="h-5 w-5" />
                         Cancel
                     </a>
                     <button type="submit" class="inline-flex items-center justify-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                        <x-heroicon-check class="h-5 w-5" />
+                        <x-heroicon-o-check class="h-5 w-5" />
                         Save Employee
                     </button>
                 </div>

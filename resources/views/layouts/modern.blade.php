@@ -56,44 +56,44 @@
                         </div>
                     </div>
                     <button @click="sidebarOpen = false" class="lg:hidden text-gray-500 hover:text-gray-700">
-                        <x-heroicon-x-mark class="h-6 w-6" />
+                        <x-heroicon-o-x-mark class="h-6 w-6" />
                     </button>
                 </div>
 
                 {{-- Navigation --}}
                 <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('dashboard') ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <x-heroicon-home class="h-5 w-5" />
+                        <x-heroicon-o-home class="h-5 w-5" />
                         Dashboard
                     </a>
 
                     <a href="{{ route('erp.suppliers.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('erp/suppliers*') ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <x-heroicon-truck class="h-5 w-5" />
+                        <x-heroicon-o-truck class="h-5 w-5" />
                         Suppliers
                     </a>
 
                     <a href="{{ route('erp.raw-materials.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('erp/raw-materials*') ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <x-heroicon-cube class="h-5 w-5" />
+                        <x-heroicon-o-cube class="h-5 w-5" />
                         Raw Materials
                     </a>
 
                     <a href="{{ route('purchases.purchase-orders.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('purchases*') ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <x-heroicon-shopping-cart class="h-5 w-5" />
+                        <x-heroicon-o-shopping-cart class="h-5 w-5" />
                         Purchase Management
                     </a>
 
                     <a href="{{ route('erp.production.orders.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('erp/production*') ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <x-heroicon-cog class="h-5 w-5" />
+                        <x-heroicon-o-cog class="h-5 w-5" />
                         Production
                     </a>
 
                     <a href="{{ route('erp.inventory.stock.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('erp/inventory*') ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <x-heroicon-archive-box class="h-5 w-5" />
+                        <x-heroicon-o-archive-box class="h-5 w-5" />
                         Inventory
                     </a>
 
                     <a href="{{ route('erp.customers.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('erp/customers*') ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <x-heroicon-users class="h-5 w-5" />
+                        <x-heroicon-o-users class="h-5 w-5" />
                         Customers
                     </a>
 
@@ -103,7 +103,7 @@
                     </a>
 
                     <a href="{{ route('erp.settings.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('erp/settings*') ? 'bg-primary-50 text-primary-700' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <x-heroicon-cog-6-tooth class="h-5 w-5" />
+                        <x-heroicon-o-cog-6-tooth class="h-5 w-5" />
                         Settings
                     </a>
                 </nav>
@@ -121,7 +121,7 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit" class="text-gray-500 hover:text-red-600 transition-colors">
-                                <x-heroicon-arrow-right-on-rectangle class="h-5 w-5" />
+                                <x-heroicon-o-arrow-right-on-rectangle class="h-5 w-5" />
                             </button>
                         </form>
                     </div>
@@ -137,12 +137,12 @@
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-4">
                         <button @click="sidebarOpen = true" class="lg:hidden text-gray-500 hover:text-gray-700">
-                            <x-heroicon-bars-3 class="h-6 w-6" />
+                            <x-heroicon-o-bars-3 class="h-6 w-6" />
                         </button>
                         
                         {{-- Search --}}
                         <div class="hidden md:block relative">
-                            <x-heroicon-magnifying-glass class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                            <x-heroicon-o-magnifying-glass class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                             <input type="text" placeholder="Search..." class="pl-10 pr-4 py-2 w-64 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:outline-none">
                         </div>
                     </div>
@@ -150,7 +150,7 @@
                     <div class="flex items-center gap-4">
                         {{-- Date --}}
                         <div class="hidden md:flex items-center text-sm text-gray-600">
-                            <x-heroicon-calendar class="h-5 w-5 mr-2" />
+                            <x-heroicon-o-calendar class="h-5 w-5 mr-2" />
                             {{ now()->format('M d, Y') }}
                         </div>
 
@@ -162,7 +162,7 @@
 
                         {{-- Dark Mode Toggle --}}
                         <button class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                            <x-heroicon-moon class="h-6 w-6" />
+                            <x-heroicon-o-moon class="h-6 w-6" />
                         </button>
 
                         {{-- User Avatar --}}
@@ -171,7 +171,7 @@
                                 <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
                                     <span class="text-primary-700 font-semibold text-sm">{{ auth()->user()->name[0] }}</span>
                                 </div>
-                                <x-heroicon-chevron-down class="h-4 w-4 text-gray-500" />
+                                <x-heroicon-o-chevron-down class="h-4 w-4 text-gray-500" />
                             </button>
                         </div>
                     </div>

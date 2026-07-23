@@ -111,7 +111,7 @@
                         </div>
                     @empty
                         <div class="text-center py-8">
-                            <x-heroicon-inbox class="h-12 w-12 text-gray-400 mx-auto mb-3" />
+                            <x-heroicon-o-inbox class="h-12 w-12 text-gray-400 mx-auto mb-3" />
                             <p class="text-gray-500">No recent activity</p>
                         </div>
                     @endforelse
@@ -125,13 +125,13 @@
         <x-ui-card>
             <div class="flex items-center justify-between mb-6">
                 <h3 class="text-lg font-semibold text-gray-900">Quick Access</h3>
-                <x-heroicon-bolt class="h-5 w-5 text-gray-400" />
+                <x-heroicon-o-bolt class="h-5 w-5 text-gray-400" />
             </div>
 
             <div class="grid grid-cols-2 gap-4">
                 <a href="{{ route('erp.production.orders.index') }}" class="flex items-center gap-3 p-4 rounded-lg border border-gray-200 hover:border-primary-500 hover:bg-primary-50 transition-all group">
                     <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-primary-200 transition-colors">
-                        <x-heroicon-cog class="h-5 w-5 text-blue-600" />
+                        <x-heroicon-o-cog class="h-5 w-5 text-blue-600" />
                     </div>
                     <div>
                         <p class="font-medium text-gray-900">Production</p>
@@ -141,7 +141,7 @@
 
                 <a href="{{ route('erp.inventory.stock.index') }}" class="flex items-center gap-3 p-4 rounded-lg border border-gray-200 hover:border-primary-500 hover:bg-primary-50 transition-all group">
                     <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center group-hover:bg-emerald-200 transition-colors">
-                        <x-heroicon-archive-box class="h-5 w-5 text-emerald-600" />
+                        <x-heroicon-o-archive-box class="h-5 w-5 text-emerald-600" />
                     </div>
                     <div>
                         <p class="font-medium text-gray-900">Inventory</p>
@@ -151,7 +151,7 @@
 
                 <a href="{{ route('erp.suppliers.index') }}" class="flex items-center gap-3 p-4 rounded-lg border border-gray-200 hover:border-primary-500 hover:bg-primary-50 transition-all group">
                     <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
-                        <x-heroicon-truck class="h-5 w-5 text-orange-600" />
+                        <x-heroicon-o-truck class="h-5 w-5 text-orange-600" />
                     </div>
                     <div>
                         <p class="font-medium text-gray-900">Suppliers</p>
@@ -161,7 +161,7 @@
 
                 <a href="{{ route('erp.customers.index') }}" class="flex items-center gap-3 p-4 rounded-lg border border-gray-200 hover:border-primary-500 hover:bg-primary-50 transition-all group">
                     <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center group-hover:bg-purple-200 transition-colors">
-                        <x-heroicon-users class="h-5 w-5 text-purple-600" />
+                        <x-heroicon-o-users class="h-5 w-5 text-purple-600" />
                     </div>
                     <div>
                         <p class="font-medium text-gray-900">Customers</p>
@@ -175,7 +175,7 @@
         <x-ui-card>
             <div class="flex items-center justify-between mb-6">
                 <h3 class="text-lg font-semibold text-gray-900">Monthly Overview</h3>
-                <x-heroicon-chart-pie class="h-5 w-5 text-gray-400" />
+                <x-heroicon-o-chart-pie class="h-5 w-5 text-gray-400" />
             </div>
 
             <div class="h-64 bg-gray-50 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">

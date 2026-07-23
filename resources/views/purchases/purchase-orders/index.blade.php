@@ -11,7 +11,7 @@
                 <p class="text-gray-600 mt-2">Manage purchase orders and supplier payments</p>
             </div>
             <a href="{{ route('purchases.purchase-orders.create') }}" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 hover:shadow-md active:scale-95">
-                <x-heroicon-plus class="h-5 w-5" />
+                <x-heroicon-o-plus class="h-5 w-5" />
                 New Purchase Order
             </a>
         </div>
@@ -19,18 +19,18 @@
 
     {{-- Statistics Cards --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-6">
-        <x-ui-card padding="sm">
+        <x-ui.card padding="sm">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <x-heroicon-calendar class="h-5 w-5 text-blue-600" />
+                    <x-heroicon-o-calendar class="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
                     <p class="text-xs text-gray-500">Today's Purchases</p>
                     <p class="text-lg font-bold text-gray-900">{{ number_format($statistics['today_purchases'], 2) }}</p>
                 </div>
             </div>
-        </x-ui-card>
-        <x-ui-card padding="sm">
+        </x-ui.card>
+        <x-ui.card padding="sm">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
                     <x-heroicon-o-chart-bar class="h-5 w-5 text-emerald-600" />
@@ -40,8 +40,8 @@
                     <p class="text-lg font-bold text-gray-900">{{ number_format($statistics['monthly_purchases'], 2) }}</p>
                 </div>
             </div>
-        </x-ui-card>
-        <x-ui-card padding="sm">
+        </x-ui.card>
+        <x-ui.card padding="sm">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
                     <x-heroicon-o-clock class="h-5 w-5 text-orange-600" />
@@ -51,47 +51,47 @@
                     <p class="text-lg font-bold text-orange-600">{{ $statistics['pending_orders'] }}</p>
                 </div>
             </div>
-        </x-ui-card>
-        <x-ui-card padding="sm">
+        </x-ui.card>
+        <x-ui.card padding="sm">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                    <x-heroicon-check-circle class="h-5 w-5 text-green-600" />
+                    <x-heroicon-o-check-circle class="h-5 w-5 text-green-600" />
                 </div>
                 <div>
                     <p class="text-xs text-gray-500">Completed Orders</p>
                     <p class="text-lg font-bold text-green-600">{{ $statistics['completed_orders'] }}</p>
                 </div>
             </div>
-        </x-ui-card>
-        <x-ui-card padding="sm">
+        </x-ui.card>
+        <x-ui.card padding="sm">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-                    <x-heroicon-currency-dollar class="h-5 w-5 text-red-600" />
+                    <x-heroicon-o-currency-dollar class="h-5 w-5 text-red-600" />
                 </div>
                 <div>
                     <p class="text-xs text-gray-500">Outstanding</p>
                     <p class="text-lg font-bold text-red-600">{{ number_format($statistics['supplier_outstanding'], 2) }}</p>
                 </div>
             </div>
-        </x-ui-card>
-        <x-ui-card padding="sm">
+        </x-ui.card>
+        <x-ui.card padding="sm">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-                    <x-heroicon-exclamation-triangle class="h-5 w-5 text-gray-600" />
+                    <x-heroicon-o-exclamation-triangle class="h-5 w-5 text-gray-600" />
                 </div>
                 <div>
                     <p class="text-xs text-gray-500">Overdue</p>
                     <p class="text-lg font-bold text-gray-600">{{ $statistics['overdue_orders'] }}</p>
                 </div>
             </div>
-        </x-ui-card>
+        </x-ui.card>
     </div>
 
-    <x-ui-card>
+    <x-ui.card>
         {{-- Filters --}}
         <form method="GET" class="flex flex-col lg:flex-row gap-4 mb-6">
             <div class="flex-1 relative">
-                <x-heroicon-magnifying-glass class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <x-heroicon-o-magnifying-glass class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="Search PO number, invoice, supplier..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none">
             </div>
             <div class="flex flex-wrap gap-2">
@@ -116,7 +116,7 @@
                 <input type="date" name="date_from" value="{{ request('date_from') }}" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none">
                 <input type="date" name="date_to" value="{{ request('date_to') }}" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none">
                 <button type="submit" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
-                    <x-heroicon-funnel class="h-5 w-5" />
+                    <x-heroicon-o-funnel class="h-5 w-5" />
                 </button>
                 <a href="{{ route('purchases.purchase-orders.index') }}" class="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors">
                     Clear
@@ -166,15 +166,15 @@
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex items-center justify-end gap-2">
                                     <a href="{{ route('purchases.purchase-orders.show', $order) }}" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="View">
-                                        <x-heroicon-eye class="h-5 w-5" />
+                                        <x-heroicon-o-eye class="h-5 w-5" />
                                     </a>
                                     @if ($order->status !== 'completed')
                                         <a href="{{ route('purchases.purchase-orders.edit', $order) }}" class="p-2 text-orange-600 hover:bg-orange-50 rounded-lg transition-colors" title="Edit">
-                                            <x-heroicon-pencil class="h-5 w-5" />
+                                            <x-heroicon-o-pencil class="h-5 w-5" />
                                         </a>
                                     @endif
                                     <button onclick="confirmDelete('{{ route('purchases.purchase-orders.destroy', $order) }}')" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
-                                        <x-heroicon-trash class="h-5 w-5" />
+                                        <x-heroicon-o-trash class="h-5 w-5" />
                                     </button>
                                 </div>
                             </td>
@@ -183,10 +183,10 @@
                         <tr>
                             <td colspan="7" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center justify-center">
-                                    <x-heroicon-shopping-cart class="h-12 w-12 text-gray-400 mb-3" />
+                                    <x-heroicon-o-shopping-cart class="h-12 w-12 text-gray-400 mb-3" />
                                     <p class="text-gray-500">No purchase orders found</p>
                                     <a href="{{ route('purchases.purchase-orders.create') }}" class="mt-4 inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium">
-                                        <x-heroicon-plus class="h-5 w-5" />
+                                        <x-heroicon-o-plus class="h-5 w-5" />
                                         Create your first purchase order
                                     </a>
                                 </div>
@@ -206,7 +206,7 @@
                 {{ $purchaseOrders->links('pagination::tailwind') }}
             </div>
         @endif
-    </x-ui-card>
+    </x-ui.card>
 
     {{-- Delete Confirmation Modal --}}
     <x-ui.modal id="deleteModal" title="Delete Purchase Order">

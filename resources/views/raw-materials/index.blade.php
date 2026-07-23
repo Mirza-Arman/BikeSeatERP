@@ -7,74 +7,74 @@
         title="Raw Materials" 
         subtitle="Manage your material inventory and stock levels"
         :actions="[
-            '<a href=\"' . route('erp.raw-materials.create') . '\" class=\"inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors\"><x-heroicon-plus class=\"h-5 w-5\" />New Material</a>'
+            '<a href=\"' . route('erp.raw-materials.create') . '\" class=\"inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors\"><x-heroicon-o-plus class=\"h-5 w-5\" />New Material</a>'
         ]"
     />
 
     {{-- Stock Summary Cards --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
-        <x-ui-card padding="sm">
+        <x-ui.card padding="sm">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <x-heroicon-folder class="h-5 w-5 text-blue-600" />
+                    <x-heroicon-o-folder class="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
                     <p class="text-xs text-gray-500">Categories</p>
                     <p class="text-xl font-bold text-gray-900">{{ $stockSummary['total_categories'] }}</p>
                 </div>
             </div>
-        </x-ui-card>
-        <x-ui-card padding="sm">
+        </x-ui.card>
+        <x-ui.card padding="sm">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
-                    <x-heroicon-cube class="h-5 w-5 text-emerald-600" />
+                    <x-heroicon-o-cube class="h-5 w-5 text-emerald-600" />
                 </div>
                 <div>
                     <p class="text-xs text-gray-500">Materials</p>
                     <p class="text-xl font-bold text-gray-900">{{ $stockSummary['total_materials'] }}</p>
                 </div>
             </div>
-        </x-ui-card>
-        <x-ui-card padding="sm">
+        </x-ui.card>
+        <x-ui.card padding="sm">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                    <x-heroicon-exclamation-triangle class="h-5 w-5 text-orange-600" />
+                    <x-heroicon-o-exclamation-triangle class="h-5 w-5 text-orange-600" />
                 </div>
                 <div>
                     <p class="text-xs text-gray-500">Low Stock</p>
                     <p class="text-xl font-bold text-orange-600">{{ $stockSummary['low_stock_items'] }}</p>
                 </div>
             </div>
-        </x-ui-card>
-        <x-ui-card padding="sm">
+        </x-ui.card>
+        <x-ui.card padding="sm">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-                    <x-heroicon-x-circle class="h-5 w-5 text-red-600" />
+                    <x-heroicon-o-x-circle class="h-5 w-5 text-red-600" />
                 </div>
                 <div>
                     <p class="text-xs text-gray-500">Out of Stock</p>
                     <p class="text-xl font-bold text-red-600">{{ $stockSummary['out_of_stock_items'] }}</p>
                 </div>
             </div>
-        </x-ui-card>
-        <x-ui-card padding="sm">
+        </x-ui.card>
+        <x-ui.card padding="sm">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                    <x-heroicon-currency-dollar class="h-5 w-5 text-purple-600" />
+                    <x-heroicon-o-currency-dollar class="h-5 w-5 text-purple-600" />
                 </div>
                 <div>
                     <p class="text-xs text-gray-500">Inventory Value</p>
                     <p class="text-xl font-bold text-gray-900">{{ number_format($stockSummary['inventory_value'], 2) }}</p>
                 </div>
             </div>
-        </x-ui-card>
+        </x-ui.card>
     </div>
 
-    <x-ui-card>
+    <x-ui.card>
         {{-- Filters --}}
         <div class="flex flex-col md:flex-row gap-4 mb-6">
             <div class="flex-1 relative">
-                <x-heroicon-magnifying-glass class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <x-heroicon-o-magnifying-glass class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input 
                     type="text" 
                     name="search" 
@@ -103,7 +103,7 @@
                     <option value="out" {{ request('stock_status') == 'out' ? 'selected' : '' }}>Out of Stock</option>
                 </select>
                 <button type="submit" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
-                    <x-heroicon-arrow-path class="h-5 w-5" />
+                    <x-heroicon-o-arrow-path class="h-5 w-5" />
                 </button>
                 <a href="{{ route('erp.raw-materials.index') }}" class="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors">
                     Clear
@@ -166,16 +166,16 @@
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex items-center justify-end gap-2">
                                     <a href="{{ route('erp.raw-materials.show', $material) }}" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="View">
-                                        <x-heroicon-eye class="h-5 w-5" />
+                                        <x-heroicon-o-eye class="h-5 w-5" />
                                     </a>
                                     <a href="{{ route('erp.raw-materials.edit', $material) }}" class="p-2 text-orange-600 hover:bg-orange-50 rounded-lg transition-colors" title="Edit">
-                                        <x-heroicon-pencil class="h-5 w-5" />
+                                        <x-heroicon-o-pencil class="h-5 w-5" />
                                     </a>
                                     <form action="{{ route('erp.raw-materials.destroy', $material) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this material?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
-                                            <x-heroicon-trash class="h-5 w-5" />
+                                            <x-heroicon-o-trash class="h-5 w-5" />
                                         </button>
                                     </form>
                                 </div>
@@ -185,7 +185,7 @@
                         <tr>
                             <td colspan="9" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center justify-center">
-                                    <x-heroicon-cube class="h-12 w-12 text-gray-400 mb-3" />
+                                    <x-heroicon-o-cube class="h-12 w-12 text-gray-400 mb-3" />
                                     <p class="text-gray-500">No materials found</p>
                                     <a href="{{ route('erp.raw-materials.create') }}" class="mt-2 text-blue-600 hover:text-blue-700">Add your first material</a>
                                 </div>
@@ -205,5 +205,5 @@
                 {{ $materials->links('pagination::tailwind') }}
             </div>
         @endif
-    </x-ui-card>
+    </x-ui.card>
 @endsection
