@@ -2,9 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\RawMaterial;
+use App\Models\PurchasePayment;
 use App\Models\Supplier;
-use App\Services\PaymentService;
 use Illuminate\Support\Facades\DB;
 
 class SupplierService
@@ -106,7 +105,7 @@ class SupplierService
         $materials = $supplier->rawMaterials()
             ->with('category')
             ->get()
-            ->map(function ($material) {
+            ->map(function ($material) use ($supplier) {
                 $lastPurchaseItem = $material->purchaseItems()
                     ->whereHas('purchaseOrder', function ($query) use ($supplier) {
                         $query->where('supplier_id', $supplier->id);
@@ -132,11 +131,7 @@ class SupplierService
         DB::transaction(function () use ($data, $userId) {
             $supplier = Supplier::findOrFail($data['supplier_id']);
 
-            $supplier->update([
-                'balance' => $supplier->balance - $data['amount'],
-            ]);
-
-            app(PaymentService::class)->recordPayment([
+            PurchasePayment::create([
                 'purchase_order_id' => null,
                 'supplier_id' => $data['supplier_id'],
                 'amount' => $data['amount'],
@@ -146,7 +141,14 @@ class SupplierService
                 'cheque_number' => $data['cheque_number'] ?? null,
                 'payment_date' => $data['payment_date'],
                 'remarks' => $data['remarks'] ?? 'Direct supplier payment',
-            ], $userId);
+                'created_by' => $userId,
+            ]);
+
+            app(SupplierLedgerService::class)->updateSupplierBalance(
+                $data['supplier_id'],
+                $data['amount'],
+                'credit'
+            );
         });
     }
 

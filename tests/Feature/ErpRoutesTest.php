@@ -53,6 +53,6 @@ it('renders the erp master layout components', function () {
         ->get('/dashboard')
         ->assertSuccessful()
         ->assertSee(config('erp.name'))
-        ->assertSee('Sample Data Table')
-        ->assertSee('Sample Form');
+        ->assertSee('Recent Activities')
+        ->assertSee('Production Overview');
 });

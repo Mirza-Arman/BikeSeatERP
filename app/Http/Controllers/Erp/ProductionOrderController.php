@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Erp;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Production\ProductionOrderRequest;
-use App\Models\ProductionOrder;
 use App\Models\Product;
+use App\Models\ProductionOrder;
 use App\Services\Inventory\StockService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,16 +14,14 @@ use Illuminate\View\View;
 
 class ProductionOrderController extends Controller
 {
-    public function __construct(protected StockService $stockService)
-    {
-    }
+    public function __construct(protected StockService $stockService) {}
 
     public function index(Request $request): View
     {
         $query = ProductionOrder::query()->with('product');
 
         if ($request->filled('search')) {
-            $query->where('order_no', 'like', '%' . $request->search . '%');
+            $query->where('order_no', 'like', '%'.$request->search.'%');
         }
 
         $productionOrders = $query->latest()->paginate(15);
@@ -45,7 +43,7 @@ class ProductionOrderController extends Controller
         $product = Product::findOrFail($data['product_id']);
         $formula = $product->productionFormula;
 
-        if (!$formula) {
+        if (! $formula) {
             return redirect()->back()->with('error', 'No production formula found for this product. Please create a formula first.');
         }
 
@@ -54,7 +52,7 @@ class ProductionOrderController extends Controller
         foreach ($formula->items as $item) {
             $requiredQuantity = $item->quantity_required * $data['quantity_to_produce'];
             $availableStock = $item->rawMaterial->current_stock;
-            
+
             if ($availableStock < $requiredQuantity) {
                 $stockIssues[] = [
                     'material' => $item->rawMaterial->name,
@@ -65,14 +63,14 @@ class ProductionOrderController extends Controller
             }
         }
 
-        if (!empty($stockIssues)) {
+        if (! empty($stockIssues)) {
             return redirect()->back()->with('error', 'Insufficient stock for production.')->with('stock_issues', $stockIssues);
         }
 
         // Auto-generate order number
         $lastOrder = ProductionOrder::withTrashed()->orderBy('id', 'desc')->first();
         $lastId = $lastOrder ? $lastOrder->id : 0;
-        $orderNo = 'PRO-' . date('Ymd') . '-' . str_pad($lastId + 1, 4, '0', STR_PAD_LEFT);
+        $orderNo = 'PRO-'.date('Ymd').'-'.str_pad($lastId + 1, 4, '0', STR_PAD_LEFT);
 
         $productionOrder = ProductionOrder::create([
             'order_no' => $orderNo,
@@ -90,7 +88,7 @@ class ProductionOrderController extends Controller
     public function show(ProductionOrder $productionOrder): View
     {
         $productionOrder->load(['product', 'formula.items.rawMaterial', 'workers.employee']);
-        
+
         return view('production.orders.show', compact('productionOrder'));
     }
 
@@ -98,34 +96,44 @@ class ProductionOrderController extends Controller
     {
         $request->validate(['status' => 'required|in:pending,in_progress,completed']);
 
-        DB::transaction(function () use ($productionOrder, $request): void {
-            $productionOrder->refresh();
-            $productionOrder->update(['status' => $request->status]);
+        if ($request->status === 'completed' && $productionOrder->status === 'completed') {
+            return redirect()->route('erp.production.orders.show', $productionOrder)
+                ->with('error', 'This production order has already been completed.');
+        }
 
-            if ($productionOrder->status === 'completed' && $productionOrder->formula_id) {
-                $formula = $productionOrder->formula;
+        try {
+            DB::transaction(function () use ($productionOrder, $request): void {
+                $productionOrder->load('formula.items');
+                $productionOrder->update(['status' => $request->status]);
 
-                foreach ($formula->items as $item) {
-                    $requiredQuantity = $item->quantity_required * $productionOrder->quantity_to_produce;
+                if ($productionOrder->status === 'completed' && $productionOrder->formula_id) {
+                    $formula = $productionOrder->formula;
 
-                    $this->stockService->removeRawMaterialStock(
-                        $item->raw_material_id,
-                        $requiredQuantity,
+                    foreach ($formula->items as $item) {
+                        $requiredQuantity = $item->quantity_required * $productionOrder->quantity_to_produce;
+
+                        $this->stockService->removeRawMaterialStock(
+                            $item->raw_material_id,
+                            $requiredQuantity,
+                            ProductionOrder::class,
+                            $productionOrder->id,
+                            'Raw materials consumed for production'
+                        );
+                    }
+
+                    $this->stockService->addFinishedGoodsStock(
+                        $productionOrder->product_id,
+                        (float) $productionOrder->quantity_to_produce,
                         ProductionOrder::class,
                         $productionOrder->id,
-                        'Raw materials consumed for production'
+                        'Finished goods produced'
                     );
                 }
-
-                $this->stockService->addFinishedGoodsStock(
-                    $productionOrder->product_id,
-                    (float) $productionOrder->quantity_to_produce,
-                    ProductionOrder::class,
-                    $productionOrder->id,
-                    'Finished goods produced'
-                );
-            }
-        });
+            });
+        } catch (\RuntimeException $exception) {
+            return redirect()->route('erp.production.orders.show', $productionOrder)
+                ->with('error', $exception->getMessage());
+        }
 
         return redirect()->route('erp.production.orders.show', $productionOrder)->with('success', 'Production order status updated successfully.');
     }

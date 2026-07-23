@@ -15,16 +15,14 @@ use Illuminate\View\View;
 
 class CustomerOrderController extends Controller
 {
-    public function __construct(protected StockService $stockService)
-    {
-    }
+    public function __construct(protected StockService $stockService) {}
 
     public function index(Request $request): View
     {
         $query = CustomerOrder::query()->with('customer');
 
         if ($request->filled('search')) {
-            $query->where('order_no', 'like', '%' . $request->search . '%');
+            $query->where('invoice_no', 'like', '%'.$request->search.'%');
         }
 
         $customerOrders = $query->latest()->paginate(15);
@@ -34,7 +32,7 @@ class CustomerOrderController extends Controller
 
     public function create(): View
     {
-        $customers = Customer::orderBy('name')->get();
+        $customers = Customer::orderBy('customer_name')->get();
         $products = Product::orderBy('product_name')->get();
 
         return view('sales.orders.create', compact('customers', 'products'));
@@ -44,7 +42,7 @@ class CustomerOrderController extends Controller
     {
         $data = $request->validated();
 
-        $customerOrder = DB::transaction(function () use ($data, $request): CustomerOrder {
+        $customerOrder = DB::transaction(function () use ($data): CustomerOrder {
             $customerOrder = CustomerOrder::create([
                 'invoice_no' => $data['invoice_no'] ?? null,
                 'customer_id' => $data['customer_id'],
@@ -81,6 +79,8 @@ class CustomerOrderController extends Controller
 
     public function show(CustomerOrder $customerOrder): View
     {
+        $customerOrder->load(['customer', 'items.product']);
+
         return view('sales.orders.show', compact('customerOrder'));
     }
 
@@ -88,8 +88,13 @@ class CustomerOrderController extends Controller
     {
         $status = $request->input('status', 'completed');
 
+        if ($status === 'completed' && $customerOrder->status === 'completed') {
+            return redirect()->route('erp.customers.orders.show', $customerOrder)
+                ->with('error', 'This customer order has already been completed.');
+        }
+
         DB::transaction(function () use ($customerOrder, $status): void {
-            $customerOrder->refresh();
+            $customerOrder->load('items');
             $customerOrder->update(['status' => $status]);
 
             if ($status === 'completed') {

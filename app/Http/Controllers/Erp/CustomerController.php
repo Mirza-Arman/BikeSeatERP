@@ -17,9 +17,9 @@ class CustomerController extends Controller
 
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request): void {
-                $q->where('customer_code', 'like', '%' . $request->search . '%')
-                    ->orWhere('name', 'like', '%' . $request->search . '%')
-                    ->orWhere('email', 'like', '%' . $request->search . '%');
+                $q->where('customer_code', 'like', '%'.$request->search.'%')
+                    ->orWhere('customer_name', 'like', '%'.$request->search.'%')
+                    ->orWhere('email', 'like', '%'.$request->search.'%');
             });
         }
 
@@ -36,14 +36,14 @@ class CustomerController extends Controller
     public function store(CustomerRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        
+
         // Auto-generate customer code if not provided
         if (empty($data['customer_code'])) {
             $lastCustomer = Customer::withTrashed()->orderBy('id', 'desc')->first();
             $lastId = $lastCustomer ? $lastCustomer->id : 0;
-            $data['customer_code'] = 'CUS' . str_pad($lastId + 1, 5, '0', STR_PAD_LEFT);
+            $data['customer_code'] = 'CUS'.str_pad($lastId + 1, 5, '0', STR_PAD_LEFT);
         }
-        
+
         Customer::create($data);
 
         return redirect()->route('erp.customers.index')->with('success', 'Customer created successfully.');
@@ -54,7 +54,7 @@ class CustomerController extends Controller
         $customer->load(['orders' => function ($query) {
             $query->latest()->limit(10);
         }]);
-        
+
         return view('customers.show', compact('customer'));
     }
 
@@ -80,7 +80,7 @@ class CustomerController extends Controller
     public function toggleStatus(Customer $customer): RedirectResponse
     {
         $customer->update([
-            'status' => $customer->status === 'active' ? 'inactive' : 'active'
+            'status' => $customer->status === 'active' ? 'inactive' : 'active',
         ]);
 
         return redirect()->route('erp.customers.index')->with('success', 'Customer status updated successfully.');

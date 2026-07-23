@@ -83,6 +83,12 @@ class PurchaseService
                 'payment_status' => $remainingAmount <= 0 ? 'paid' : ($paidAmount > 0 ? 'partial' : 'unpaid'),
             ]);
 
+            app(SupplierLedgerService::class)->updateSupplierBalance(
+                (int) $data['supplier_id'],
+                $grandTotal,
+                'debit'
+            );
+
             if ($paidAmount > 0) {
                 app(PaymentService::class)->recordPayment([
                     'purchase_order_id' => $purchaseOrder->id,

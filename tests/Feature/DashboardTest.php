@@ -71,13 +71,14 @@ it('renders dashboard with live metrics from the database', function () {
     ]);
 
     PurchaseOrder::create([
+        'purchase_number' => 'PO-000999',
         'supplier_id' => Supplier::first()->id,
         'purchase_date' => now()->toDateString(),
         'invoice_no' => 'INV-999',
         'grand_total' => 100,
         'paid_amount' => 100,
         'remaining_amount' => 0,
-        'status' => 'received',
+        'status' => 'pending',
     ]);
 
     ProductionOrder::create([

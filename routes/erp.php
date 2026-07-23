@@ -10,7 +10,6 @@ use App\Http\Controllers\Erp\EmployeeController as ErpEmployeeController;
 use App\Http\Controllers\Erp\MaterialCategoryController;
 use App\Http\Controllers\Erp\ProductController;
 use App\Http\Controllers\Erp\ProductionOrderController as ErpProductionOrderController;
-use App\Http\Controllers\Erp\PurchaseOrderController;
 use App\Http\Controllers\Erp\RawMaterialController;
 use App\Http\Controllers\Erp\SupplierController;
 use App\Http\Controllers\Inventory\FinishedGoodController;
@@ -60,6 +59,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [SupplierController::class, 'index'])->name('index');
         Route::get('/create', [SupplierController::class, 'create'])->name('create');
         Route::post('/', [SupplierController::class, 'store'])->name('store');
+        Route::post('/payments', [SupplierController::class, 'storePayment'])->name('store-payment');
+        Route::get('/purchase-history', [PurchaseHistoryController::class, 'index'])->name('purchase-history.index');
         Route::get('/{supplier}', [SupplierController::class, 'show'])->name('show');
         Route::get('/{supplier}/edit', [SupplierController::class, 'edit'])->name('edit');
         Route::put('/{supplier}', [SupplierController::class, 'update'])->name('update');
@@ -68,8 +69,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/{supplier}/ledger', [SupplierController::class, 'ledger'])->name('ledger');
         Route::get('/{supplier}/materials-supplied', [SupplierController::class, 'materialsSupplied'])->name('materials-supplied');
         Route::get('/{supplier}/create-payment', [SupplierController::class, 'createPayment'])->name('create-payment');
-        Route::post('/payments', [SupplierController::class, 'storePayment'])->name('store-payment');
-        Route::get('/purchase-history', [PurchaseHistoryController::class, 'index'])->name('purchase-history.index');
     });
 
     Route::prefix('raw-materials')->name('erp.raw-materials.')->group(function () {
@@ -129,11 +128,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [CustomerController::class, 'index'])->name('index');
         Route::get('/create', [CustomerController::class, 'create'])->name('create');
         Route::post('/', [CustomerController::class, 'store'])->name('store');
-        Route::get('/{customer}', [CustomerController::class, 'show'])->name('show');
-        Route::get('/{customer}/edit', [CustomerController::class, 'edit'])->name('edit');
-        Route::put('/{customer}', [CustomerController::class, 'update'])->name('update');
-        Route::delete('/{customer}', [CustomerController::class, 'destroy'])->name('destroy');
-        Route::post('/{customer}/toggle-status', [CustomerController::class, 'toggleStatus'])->name('toggle-status');
         Route::get('/orders', [CustomerOrderController::class, 'index'])->name('orders.index');
         Route::get('/orders/create', [CustomerOrderController::class, 'create'])->name('orders.create');
         Route::post('/orders', [CustomerOrderController::class, 'store'])->name('orders.store');
@@ -141,6 +135,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/orders/{customerOrder}/status', [CustomerOrderController::class, 'updateStatus'])->name('orders.status');
         Route::delete('/orders/{customerOrder}', [CustomerOrderController::class, 'destroy'])->name('orders.destroy');
         Route::get('/delivery-records', [DeliveryRecordController::class, 'index'])->name('delivery-records.index');
+        Route::get('/{customer}', [CustomerController::class, 'show'])->name('show');
+        Route::get('/{customer}/edit', [CustomerController::class, 'edit'])->name('edit');
+        Route::put('/{customer}', [CustomerController::class, 'update'])->name('update');
+        Route::delete('/{customer}', [CustomerController::class, 'destroy'])->name('destroy');
+        Route::post('/{customer}/toggle-status', [CustomerController::class, 'toggleStatus'])->name('toggle-status');
     });
 
     Route::prefix('purchases')->name('purchases.')->group(function () {

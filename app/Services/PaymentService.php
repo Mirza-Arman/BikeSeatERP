@@ -58,14 +58,16 @@ class PaymentService
 
             $payment->delete();
 
-            $totalPaid = $purchaseOrder->payments()->sum('amount');
-            $remainingAmount = $purchaseOrder->grand_total - $totalPaid;
+            if ($purchaseOrder) {
+                $totalPaid = $purchaseOrder->payments()->sum('amount');
+                $remainingAmount = $purchaseOrder->grand_total - $totalPaid;
 
-            $purchaseOrder->update([
-                'paid_amount' => $totalPaid,
-                'remaining_amount' => $remainingAmount,
-                'payment_status' => $remainingAmount <= 0 ? 'paid' : ($totalPaid > 0 ? 'partial' : 'unpaid'),
-            ]);
+                $purchaseOrder->update([
+                    'paid_amount' => $totalPaid,
+                    'remaining_amount' => $remainingAmount,
+                    'payment_status' => $remainingAmount <= 0 ? 'paid' : ($totalPaid > 0 ? 'partial' : 'unpaid'),
+                ]);
+            }
 
             app(SupplierLedgerService::class)->updateSupplierBalance(
                 $supplierId,
