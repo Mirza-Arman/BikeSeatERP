@@ -3,16 +3,25 @@
 namespace App\Http\Controllers\RawMaterials;
 
 use App\Http\Controllers\Controller;
+use App\Models\StockTransaction;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 
 class StockLedgerController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        return $this->moduleView('raw-materials/stock-ledger/index', 'Stock Ledger', [
-                ['label' => 'Dashboard', 'url' => route('dashboard')],
-                ['label' => 'Raw Material'],
-                ['label' => 'Stock Ledger'],
-            ]);
+        $query = StockTransaction::with('rawMaterial');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->whereHas('rawMaterial', function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%");
+            });
+        }
+
+        $transactions = $query->orderBy('transaction_date', 'desc')->paginate(15);
+
+        return view('raw-materials.stock-ledger.index', compact('transactions'));
     }
 }

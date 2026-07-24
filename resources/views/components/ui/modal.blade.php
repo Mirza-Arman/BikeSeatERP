@@ -3,6 +3,7 @@
     'title' => null,
     'maxWidth' => 'md',
     'trigger' => null,
+    'footer' => null,
 ])
 
 @php

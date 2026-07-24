@@ -13,6 +13,7 @@ class RawMaterial extends Model
 
     protected $fillable = [
         'category_id',
+        'material_type_id',
         'supplier_id',
         'material_code',
         'name',
@@ -42,6 +43,11 @@ class RawMaterial extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(MaterialCategory::class, 'category_id');
+    }
+
+    public function materialType(): BelongsTo
+    {
+        return $this->belongsTo(MaterialType::class);
     }
 
     public function supplier(): BelongsTo
